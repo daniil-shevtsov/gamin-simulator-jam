@@ -7,6 +7,12 @@ uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture;
 
 uniform float depth_range:hint_range(0.1, 100.0, 0.1);
 
+uniform float inner_radius = 0.1;
+uniform float outer_radius = 1;
+uniform float vignette_strength = 1.0;
+uniform float dither_strength = 10.03;
+uniform vec4 vignette_color: source_color;
+
 void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
 }
@@ -20,17 +26,32 @@ void fragment() {
 	 //Coords
 	vec2 uv = SCREEN_UV;
     
-    //Produce some noise based on the coords
-    vec3 grainPlate = vec3(grain(uv));
-    
-    //Get the webcam
-   vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
-    
-    //Mix the two signals together
-    vec3 mixer = mix(screen_color.rgb, grainPlate, .1);
+	float dist = distance(UV, vec2(0.5));
 	
-    
-    ALBEDO = mixer; 
+	float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
+	float dither = fract(sin(dot(UV, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
+	
+	ALBEDO = vignette_color.rgb;
+	ALPHA = vignette + dither;
+	
+	
+	
+    ////Produce some noise based on the coords
+    //vec3 grainPlate = vec3(grain(uv));
+    //
+    ////Get the webcam
+   //vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
+    //
+    ////Mix the two signals together
+    //vec3 mixer = mix(screen_color.rgb, grainPlate, .1);
+	//
+    //
+    //ALBEDO = mixer; 
+	
+	
+	
+	
+	
 	//vec2 uv = SCREEN_UV;
 	//
 	//vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;

@@ -127,7 +127,12 @@ size = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6vt6k"]
 render_priority = 0
 shader = ExtResource("8_xdbbs")
-shader_parameter/depth_range = null
+shader_parameter/depth_range = 0.1
+shader_parameter/inner_radius = -0.38
+shader_parameter/outer_radius = 0.735
+shader_parameter/vignette_strength = 0.955
+shader_parameter/dither_strength = 0.225
+shader_parameter/vignette_color = null
 
 [sub_resource type="Environment" id="Environment_a0wmc"]
 ambient_light_color = Color(0.956863, 0.956863, 0.956863, 1)
