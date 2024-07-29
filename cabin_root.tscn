@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=27 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c5emcn3fsokmg" path="res://assets/models/26-knife/maps/knife_cabo_H1_BaseColor.tga" id="5_fsow0"]
 [ext_resource type="Texture2D" uid="uid://gk10cec3b8hd" path="res://assets/models/26-knife/maps/knife_lamina_H_BaseColor.tga" id="6_5vlg8"]
 [ext_resource type="PackedScene" uid="uid://j7mq84xorq0r" path="res://camera_marker.tscn" id="7_75bk6"]
+[ext_resource type="Shader" path="res://cabin_root.gdshader" id="8_xdbbs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -119,6 +120,15 @@ shadow_mesh = SubResource("ArrayMesh_xsqea")
 [sub_resource type="BoxShape3D" id="BoxShape3D_8fg00"]
 size = Vector3(0.222864, 0.009021, 0.0395996)
 
+[sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6vt6k"]
+render_priority = 0
+shader = ExtResource("8_xdbbs")
+shader_parameter/depth_range = null
+
 [sub_resource type="Environment" id="Environment_a0wmc"]
 ambient_light_color = Color(0.956863, 0.956863, 0.956863, 1)
 
@@ -164,6 +174,11 @@ shape = SubResource("BoxShape3D_8fg00")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 0.032507, 2.17322, 2.73594)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0.189313, -1.01642)
+mesh = SubResource("QuadMesh_wd0f3")
+surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_a0wmc")
