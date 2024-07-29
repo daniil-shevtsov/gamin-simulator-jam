@@ -13,6 +13,15 @@ uniform float vignette_strength = 1.0;
 uniform float dither_strength = 10.03;
 uniform vec4 vignette_color: source_color;
 
+uniform vec2 r_displacement = vec2(3.0, 0.0);
+uniform vec2 g_displacement = vec2(0.0, 0.0);
+uniform vec2 b_displacement = vec2(-3.0, 0.0);
+
+uniform float height: hint_range(0.0, 1.0, 0.1) = 0.7;
+uniform float width: hint_range(0.0, 1.0, 0.1) = 0.5;
+
+uniform 	float fade = 0.7;
+
 void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
 }
@@ -36,45 +45,22 @@ void fragment() {
 	
 	
 	
-    ////Produce some noise based on the coords
-    //vec3 grainPlate = vec3(grain(uv));
-    //
-    ////Get the webcam
-   //vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
-    //
-    ////Mix the two signals together
-    //vec3 mixer = mix(screen_color.rgb, grainPlate, .1);
-	//
-    //
-    //ALBEDO = mixer; 
+    //Produce some noise based on the coords
+    vec3 grainPlate = vec3(grain(uv));
+    vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
+    //Mix the two signals together
+    vec3 mixer = mix(ALBEDO.rgb, grainPlate, .1);
+    ALBEDO = mixer; 
 	
+	float shrink_width = 2.0 / width;
+	float shrink_height = 2.0 / height;
+	float abberationDist = distance(vec2(UV.x * shrink_width, UV.y * shrink_height), vec2(0.5 * shrink_width, 0.5 * shrink_height));
 	
+	vec2 SCREEN_PIXEL_SIZE = 1.0/VIEWPORT_SIZE;
+	float r = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*r_displacement), 0.0).r;
+	float g = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*g_displacement), 0.0).g;
+	float b = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*b_displacement), 0.0).b;
 	
-	
-	
-	//vec2 uv = SCREEN_UV;
-	//
-	//vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
-	//vec3 normal = texture(NORMAL_TEXTURE, uv).rgb;
-	//float roughness =  texture(NORMAL_TEXTURE, uv).w;
-	//
-	//float depth = texture(DEPTH_TEXTURE, SCREEN_UV).x;
-	//vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
-	//vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
-	//view.xyz /= view.w;
-	//float linear_depth = -view.z / depth_range;
-	//
-	//// your code goes here!
-	//
-	//vec3 fog = vec3(linear_depth);
-	//vec3 final_color = fog + screen_color;
-	//
-	//ALBEDO = final_color;
-	
-	// example outputs
-	
-	//ALBEDO = vec3(linear_depth); 	// showing depth texture
-	//ALBEDO = normal; 				// showing normal texture
-	//ALBEDO = vec3(roughness); 	// showing roughness texture
-	//ALBEDO = screen_color;		// showing screen texture
+	ALBEDO = vec3(r, g, b);
+	ALPHA = abberationDist - fade;
 }

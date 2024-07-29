@@ -128,11 +128,17 @@ size = Vector2(2, 2)
 render_priority = 0
 shader = ExtResource("8_xdbbs")
 shader_parameter/depth_range = 0.1
-shader_parameter/inner_radius = -0.38
-shader_parameter/outer_radius = 0.735
-shader_parameter/vignette_strength = 0.955
-shader_parameter/dither_strength = 0.225
-shader_parameter/vignette_color = null
+shader_parameter/inner_radius = -0.12
+shader_parameter/outer_radius = 1.02
+shader_parameter/vignette_strength = 0.615
+shader_parameter/dither_strength = 0.31
+shader_parameter/vignette_color = Color(0.145098, 0.0588235, 0, 1)
+shader_parameter/r_displacement = Vector2(3, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-3, 0)
+shader_parameter/height = 0.7
+shader_parameter/width = 0.5
+shader_parameter/fade = 0.96
 
 [sub_resource type="Environment" id="Environment_a0wmc"]
 ambient_light_color = Color(0.956863, 0.956863, 0.956863, 1)
