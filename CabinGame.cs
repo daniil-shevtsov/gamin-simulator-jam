@@ -51,14 +51,6 @@ public partial class CabinGame : Node3D
 			rotationTween.SetParallel(true);
 			rotationTween.TweenProperty(camera3D, new NodePath("global_position"), dummyCamera.GlobalPosition, 0.3f).SetTrans(Tween.TransitionType.Spring);
 			rotationTween.TweenProperty(camera3D, new NodePath("rotation"), dummyCamera.Rotation, 0.3f).SetTrans(Tween.TransitionType.Spring);
-
-			// rotationTween.TweenProperty(camera3D, new NodePath("global_position"), currentCameraMarker.cameraMarker.GlobalPosition, 0.3f).SetTrans(Tween.TransitionType.Spring);
-			// // rotationTween.TweenProperty(camera3D, new NodePath("transform"), camera3D.Transform.LookingAt(currentCameraMarker.lookAtMarker.GlobalPosition, new Vector3(0, 1, 0)), 0.3f).SetTrans(Tween.TransitionType.Spring);
-
-			// rotationTween.TweenProperty(camera3D, new NodePath("global_transform"), camera3D.GlobalTransform.LookingAt(currentCameraMarker.lookAtMarker.GlobalTransform.Origin, new Vector3(0, 1, 0)), 0.3f).SetTrans(Tween.TransitionType.Spring);
-
-			// // camera3D.GlobalPosition = currentCameraMarker.cameraMarker.GlobalPosition;
-			// // camera3D.LookAt(currentCameraMarker.lookAtMarker.GlobalPosition);
 		}
 	}
 }
