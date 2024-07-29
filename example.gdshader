@@ -64,9 +64,9 @@ vec4 vignette(vec2 uv) {
 void fragment() {
 	vec3 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
 	ALBEDO = screen_color;
-	//vec4 vignetteResult = vignette(UV);
-	//ALBEDO = vignetteResult.rgb;
-	//ALPHA = vignetteResult.a;
+	vec4 vignetteResult = vignette(SCREEN_UV);
+	ALBEDO = vignetteResult.rgb;
+	ALPHA = vignetteResult.a;
 	//
 	vec4 abberationResult = chromaticAbberation(UV, SCREEN_UV, VIEWPORT_SIZE);
     ALBEDO = abberationResult.rgb; 
@@ -75,7 +75,7 @@ void fragment() {
 	vec4 grainResult = grain(UV, SCREEN_UV, vec4(ALBEDO, ALPHA));
 
     ALBEDO = grainResult.rgb; 
-	ALPHA = 1.0f;
+	//ALPHA = 1.0f;
 	
 
 }
