@@ -180,6 +180,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5475, 2.06084, 1.04492)
 [node name="LookAtMarker" parent="KnifeMarker" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.972151, -0.496366, 0.25308)
 
+[node name="DummyCamera" type="Node3D" parent="."]
+
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
 [editable path="KnifeMarker"]
