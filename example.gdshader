@@ -26,41 +26,58 @@ void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
 }
 
-float grain (vec2 st) {
-    return fract(sin(dot(st.xy, vec2(17.0,180.)))* 2500. + TIME);
+vec4 grain(vec2 uv, vec2 screenUv, vec4 color) {
+	//Produce some noise based on the coords
+	float grain = fract(sin(dot(screenUv.xy, vec2(17.0,180.)))* 2500. + TIME);
+    vec3 grainPlate = vec3(grain);
+
+    //Mix the two signals together
+    vec3 mixer = mix(color.rgb, grainPlate, .1);
+	
+	return vec4(mixer, 1);
+}
+
+vec4 chromaticAbberation(vec2 uv, vec2 screenUv, vec2 viewportSize) {
+	float shrink_width = 2.0 / width;
+	float shrink_height = 2.0 / height;
+	float abberationDist = distance(vec2(uv.x * shrink_width, uv.y * shrink_height), vec2(0.5 * shrink_width, 0.5 * shrink_height));
+	
+	vec2 SCREEN_PIXEL_SIZE = 1.0/viewportSize;
+	float r = texture(SCREEN_TEXTURE, screenUv + vec2(SCREEN_PIXEL_SIZE*r_displacement), 0.0).r;
+	float g = texture(SCREEN_TEXTURE, screenUv + vec2(SCREEN_PIXEL_SIZE*g_displacement), 0.0).g;
+	float b = texture(SCREEN_TEXTURE, screenUv + vec2(SCREEN_PIXEL_SIZE*b_displacement), 0.0).b;
+	vec4 abberationResult = vec4(r, g, b, abberationDist - fade);
+	
+	return abberationResult;
+}
+
+vec4 vignette(vec2 uv) {
+	float dist = distance(uv, vec2(0.5));
+	
+	float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
+	float dither = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
+	
+	return vec4(vignette_color.rgb, vignette + dither);
 }
 
 
 void fragment() {
-	 //Coords
-	vec2 uv = SCREEN_UV;
-    
-	float dist = distance(UV, vec2(0.5));
+	vec3 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	ALBEDO = screen_color;
+	//vec4 vignetteResult = vignette(UV);
+	//ALBEDO = vignetteResult.rgb;
+	//ALPHA = vignetteResult.a;
+	//
+	//vec4 abberationResult = chromaticAbberation(UV, SCREEN_UV, VIEWPORT_SIZE);
+//
+    //ALBEDO = abberationResult.rgb; 
+	////ALBEDO = abberationColor;
+	//ALPHA = abberationResult.a;
 	
-	float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
-	float dither = fract(sin(dot(UV, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
+	vec4 grainResult = grain(UV, SCREEN_UV, vec4(ALBEDO, ALPHA));
+
+    ALBEDO = grainResult.rgb; 
+	ALPHA = 1.0f;
 	
-	ALBEDO = vignette_color.rgb;
-	ALPHA = vignette + dither;
-	
-	
-	
-    //Produce some noise based on the coords
-    vec3 grainPlate = vec3(grain(uv));
-    vec3 screen_color = texture(SCREEN_TEXTURE, uv).rgb;
-    //Mix the two signals together
-    vec3 mixer = mix(ALBEDO.rgb, grainPlate, .1);
-    ALBEDO = mixer; 
-	
-	float shrink_width = 2.0 / width;
-	float shrink_height = 2.0 / height;
-	float abberationDist = distance(vec2(UV.x * shrink_width, UV.y * shrink_height), vec2(0.5 * shrink_width, 0.5 * shrink_height));
-	
-	vec2 SCREEN_PIXEL_SIZE = 1.0/VIEWPORT_SIZE;
-	float r = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*r_displacement), 0.0).r;
-	float g = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*g_displacement), 0.0).g;
-	float b = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE*b_displacement), 0.0).b;
-	
-	ALBEDO = vec3(r, g, b);
-	ALPHA = abberationDist - fade;
+
 }
