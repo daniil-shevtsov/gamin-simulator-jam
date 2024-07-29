@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c5emcn3fsokmg" path="res://assets/models/26-knife/maps/knife_cabo_H1_BaseColor.tga" id="5_fsow0"]
 [ext_resource type="Texture2D" uid="uid://gk10cec3b8hd" path="res://assets/models/26-knife/maps/knife_lamina_H_BaseColor.tga" id="6_5vlg8"]
 [ext_resource type="PackedScene" uid="uid://j7mq84xorq0r" path="res://camera_marker.tscn" id="7_75bk6"]
-[ext_resource type="Shader" path="res://cabin_root.gdshader" id="8_xdbbs"]
+[ext_resource type="Shader" path="res://example.gdshader" id="8_xdbbs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
