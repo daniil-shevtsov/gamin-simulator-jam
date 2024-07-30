@@ -17,13 +17,16 @@ uniform vec2 r_displacement = vec2(3.0, 0.0);
 uniform vec2 g_displacement = vec2(0.0, 0.0);
 uniform vec2 b_displacement = vec2(-3.0, 0.0);
 
-uniform float height: hint_range(0.0, 1.0, 0.1) = 0.7;
-uniform float width: hint_range(0.0, 1.0, 0.1) = 0.5;
+uniform float height: hint_range(0.1, 1.0, 0.1) = 0.7;
+uniform float width: hint_range(0.1, 1.0, 0.1) = 0.5;
 
 uniform 	float fade = 0.7;
 
 uniform float grain_amount : hint_range(0.0, 1.0) = 0.05; // Adjust the amount of grain
 uniform float grain_size : hint_range(0.1, 10.0) = 1.0; // Adjust the size of the grain
+
+uniform float vignette_mix : hint_range(0.0, 1.0, 0.1) = 1.;
+
 
 uniform float vignetteGrainMixAmount: hint_range(0.0, 1.0, 0.1) = 0.5;
 uniform float grainMixAmount: hint_range(0.0, 1.0, 0.1) = 0.1;
@@ -35,12 +38,12 @@ void vertex(){
 vec4 grain(vec2 uv, vec2 screenUv, vec4 color) {
 	//Produce some noise based on the coords
 	float grain = fract(sin(dot(screenUv.xy, vec2(17.0,180.)))* 2500. + TIME);
-    vec3 grainPlate = vec3(grain);
+    vec4 grainPlate = vec4(vec3(grain), 1.);
 
     //Mix the two signals together
-    vec3 mixer = mix(color.rgb, grainPlate, grainMixAmount);
+    vec4 mixer = mix(color, grainPlate, grainMixAmount);
 	
-	return vec4(mixer, 1.);
+	return mixer;
 }
 
 vec4 chromaticAbberation(sampler2D screenTexture, vec2 uv, vec2 screenUv, vec2 viewportSize,) {
@@ -57,37 +60,37 @@ vec4 chromaticAbberation(sampler2D screenTexture, vec2 uv, vec2 screenUv, vec2 v
 	return abberationResult;
 }
 
-vec4 vignette(vec2 uv) {
-	float dist = distance(uv, vec2(0.5));
-	
-	float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
-	float dynamic = 0.;//TIME/10.;
-	float dither = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123 + dynamic) * dither_strength;
-	
-	return vec4(vignette_color.rgb, vignette + dither);
+vec4 vignette(vec2 uv, vec4 current_color) {
+    float dist = distance(uv, vec2(0.5, 0.5));
+    
+    float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
+    float dither = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
+    
+    vec3 vignetteEffect = current_color.rgb * (1.0 - vignette + dither);
+    
+    return  vec4(vignetteEffect, vignette + dither);
 }
 
 
 void fragment() {
 	vec3 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
 	ALBEDO = screen_color;
+	ALPHA = 1.;
 	
-	//vec4 abberationResult = chromaticAbberation(SCREEN_TEXTURE, UV, SCREEN_UV, VIEWPORT_SIZE);
+	vec4 abberationResult = chromaticAbberation(SCREEN_TEXTURE, UV, SCREEN_UV, VIEWPORT_SIZE);
     //ALBEDO = abberationResult.rgb; 
 	//ALPHA = abberationResult.a;
-	
-	vec4 vignetteResult = vignette(SCREEN_UV);
+	//
+	vec4 vignetteResult = vignette(SCREEN_UV,abberationResult);
 	ALBEDO = vignetteResult.rgb;
 	ALPHA = vignetteResult.a;
 	
 
 	//
 	//
-	vec4 grainResult = grain(UV, SCREEN_UV, vignetteResult);
-
-
-    ALBEDO = mix(ALBEDO, grainResult.rgb, vignetteGrainMixAmount); 
-	ALPHA = mix(ALPHA, grainResult.a, vignetteGrainMixAmount);
+	//vec4 grainResult = grain(UV, SCREEN_UV, vignetteResult);
+    //ALBEDO = mix(ALBEDO, grainResult.rgb, vignetteGrainMixAmount); 
+	//ALPHA = mix(ALPHA, grainResult.a, vignetteGrainMixAmount);
 	
 
 }
