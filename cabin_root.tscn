@@ -142,8 +142,8 @@ shader_parameter/fade = 0.96
 shader_parameter/grain_amount = 0.0
 shader_parameter/grain_size = 1.0
 shader_parameter/vignette_mix = 0.5
-shader_parameter/vignetteGrainMixAmount = 0.5
-shader_parameter/grainMixAmount = 0.7
+shader_parameter/vignetteGrainMixAmount = 0.1
+shader_parameter/grainMixAmount = 0.4
 
 [sub_resource type="Environment" id="Environment_a0wmc"]
 ambient_light_color = Color(0.956863, 0.956863, 0.956863, 1)

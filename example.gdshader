@@ -64,11 +64,11 @@ vec4 vignette(vec2 uv, vec4 current_color) {
     float dist = distance(uv, vec2(0.5, 0.5));
     
     float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
-    float dither = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
+    float dither = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123 + sin(TIME/10.)) * dither_strength;
     
     vec3 vignetteEffect = current_color.rgb * (1.0 - vignette + dither);
     
-    return  vec4(vignetteEffect, vignette + dither);
+    return  vec4(vignetteEffect, current_color.a);
 }
 
 
@@ -78,19 +78,10 @@ void fragment() {
 	ALPHA = 1.;
 	
 	vec4 abberationResult = chromaticAbberation(SCREEN_TEXTURE, UV, SCREEN_UV, VIEWPORT_SIZE);
-    //ALBEDO = abberationResult.rgb; 
-	//ALPHA = abberationResult.a;
-	//
+
 	vec4 vignetteResult = vignette(SCREEN_UV,abberationResult);
-	ALBEDO = vignetteResult.rgb;
-	ALPHA = vignetteResult.a;
-	
 
-	//
-	//
-	//vec4 grainResult = grain(UV, SCREEN_UV, vignetteResult);
-    //ALBEDO = mix(ALBEDO, grainResult.rgb, vignetteGrainMixAmount); 
-	//ALPHA = mix(ALPHA, grainResult.a, vignetteGrainMixAmount);
-	
-
+	vec4 grainResult = grain(UV, SCREEN_UV, vignetteResult);
+    ALBEDO = mix(vignetteResult.rgb, grainResult.rgb, vignetteGrainMixAmount); 
+	ALPHA = mix(vignetteResult.a, grainResult.a, vignetteGrainMixAmount);
 }
