@@ -150,7 +150,8 @@ shader_parameter/vignetteGrainMixAmount = 0.2
 shader_parameter/grainMixAmount = 0.4
 
 [sub_resource type="Environment" id="Environment_a0wmc"]
-ambient_light_color = Color(0.956863, 0.956863, 0.956863, 1)
+background_mode = 1
+background_energy_multiplier = 0.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lx3lc"]
 
@@ -223,6 +224,13 @@ surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 environment = SubResource("Environment_a0wmc")
 camera_attributes = SubResource("CameraAttributesPractical_lx3lc")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.643001, 0.765865, 0, -0.765865, 0.643001, -0.0188675, 3.93436, 0.13591)
+visible = false
+light_color = Color(0.941176, 0.435294, 0.380392, 1)
+omni_range = 4.569
+omni_attenuation = 2.73208
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.643001, 0.765865, 0, -0.765865, 0.643001, 0, 4.57192, 3.38068)
 visible = false
@@ -245,6 +253,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41107, -0.732461, -1.57819
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("12_61vfk")]
 transform = Transform3D(-3.2259e-07, 0, 5.305, 0, 5, 0, -7.38, 0, -2.31889e-07, -3.74792, 4.9836, -8.66112)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.1785, 0.326591, -0.928157, 0.0616785, 0.945166, 0.320714, 0.982005, 0, -0.188855, -4.91181, 3.11793, -2.19498)
+light_color = Color(0.890196, 0.152941, 0.184314, 1)
+light_energy = 6.904
+light_indirect_energy = 1.295
+light_volumetric_fog_energy = 1.531
+light_size = 0.129
+light_specular = 1.386
+distance_fade_begin = 901.52
+distance_fade_length = 871.52
+spot_range = 8.508
+spot_attenuation = 0.812251
+spot_angle = 28.1
+spot_angle_attenuation = 10.1965
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
