@@ -147,7 +147,7 @@ shader_parameter/grain_amount = 0.0
 shader_parameter/grain_size = 1.0
 shader_parameter/vignette_mix = 0.5
 shader_parameter/vignetteGrainMixAmount = 0.2
-shader_parameter/grainMixAmount = 0.4
+shader_parameter/grainMixAmount = 0.03
 
 [sub_resource type="Environment" id="Environment_a0wmc"]
 background_mode = 1
@@ -216,7 +216,6 @@ transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, -0.00674686, 0.15987, -1.01419)
-visible = false
 mesh = SubResource("QuadMesh_wd0f3")
 surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 
@@ -226,8 +225,8 @@ camera_attributes = SubResource("CameraAttributesPractical_lx3lc")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.643001, 0.765865, 0, -0.765865, 0.643001, -0.0188675, 3.93436, 0.13591)
-visible = false
-light_color = Color(0.941176, 0.435294, 0.380392, 1)
+light_color = Color(1, 0.576471, 0.462745, 1)
+light_energy = 3.184
 omni_range = 4.569
 omni_attenuation = 2.73208
 

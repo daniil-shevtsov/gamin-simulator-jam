@@ -29,7 +29,7 @@ uniform float vignette_mix : hint_range(0.0, 1.0, 0.1) = 1.;
 
 
 uniform float vignetteGrainMixAmount: hint_range(0.0, 1.0, 0.1) = 0.5;
-uniform float grainMixAmount: hint_range(0.0, 1.0, 0.1) = 0.1;
+uniform float grainMixAmount: hint_range(0.0, 1.0, 0.015) = 0.1;
 
 void vertex(){
 	POSITION = vec4(VERTEX, 1.0);
