@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=36 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://sfioka1a7gbx" path="res://assets/models/cabin/entrance/doorway_cabin_asset.glb" id="9_mxq0e"]
 [ext_resource type="PackedScene" uid="uid://b7o0vc51i6x7v" path="res://assets/models/cabin/window/window_cabin_asset.glb" id="10_v6vcv"]
 [ext_resource type="PackedScene" uid="uid://4ec32541oujg" path="res://assets/models/cabin/wall/cabin_wall_asset.glb" id="11_2y30d"]
-[ext_resource type="PackedScene" path="res://assets/models/cabin/roof/roof_cabin_asset.glb" id="12_61vfk"]
+[ext_resource type="PackedScene" uid="uid://d05fwguo25585" path="res://assets/models/cabin/roof/roof_cabin_asset.glb" id="12_61vfk"]
+[ext_resource type="AudioStream" uid="uid://c7jqi4wrdkyh8" path="res://assets/sounds/rain-indoor-cabin-loop-74664.mp3" id="13_ot8y1"]
+[ext_resource type="AudioStream" uid="uid://bubrqehc13t6u" path="res://assets/sounds/scritch2.mp3" id="14_853yy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -279,6 +281,7 @@ spot_angle_attenuation = 10.1965
 
 [node name="DoorLight" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.55708)
+visible = false
 
 [node name="DoorLight" type="MeshInstance3D" parent="DoorLight"]
 mesh = SubResource("SphereMesh_6og3m")
@@ -299,6 +302,14 @@ spot_angle_attenuation = 0.00170029
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0854, 2.294, -4.80405)
 mesh = SubResource("CylinderMesh_t52rl")
+
+[node name="AmbienceAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_ot8y1")
+volume_db = -8.82
+autoplay = true
+
+[node name="ScritchAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_853yy")
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]

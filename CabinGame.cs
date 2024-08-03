@@ -11,6 +11,9 @@ public partial class CabinGame : Node3D
 	private CameraMarker knifeMarker;
 	private CameraMarker entranceMarker;
 
+	private Node3D doorLight;
+	private AudioStreamPlayer scritchPlayer;
+
 	private List<CameraMarker> markersToCycle = new();
 
 	private CameraMarker currentCameraMarker = null;
@@ -25,6 +28,9 @@ public partial class CabinGame : Node3D
 		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
 		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
+		doorLight = GetNode<Node3D>("DoorLight");
+		scritchPlayer = GetNode<AudioStreamPlayer>("ScritchAudioPlayer");
+
 		currentCameraMarker = initialMarker;
 		SwitchTo(initialMarker);
 
@@ -36,6 +42,12 @@ public partial class CabinGame : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (Input.IsActionJustReleased("moon"))
+		{
+			scritchPlayer.Play();
+			doorLight.Visible = !doorLight.Visible;
+		}
+
 		if (Input.IsActionJustReleased("jump"))
 		{
 			var newIndex = ++currentMarkerIndex;
