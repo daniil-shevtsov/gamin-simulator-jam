@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=33 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -155,6 +155,13 @@ background_energy_multiplier = 0.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lx3lc"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1170"]
+emission_enabled = true
+emission = Color(0.984314, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6og3m"]
+material = SubResource("StandardMaterial3D_e1170")
+
 [node name="CabinRoot" type="Node3D"]
 script = ExtResource("1_k0v8v")
 
@@ -194,7 +201,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00128784, 0.000250101, 0.00
 shape = SubResource("BoxShape3D_8fg00")
 
 [node name="Door" parent="Cabin" instance=ExtResource("9_mxq0e")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -6.50561, 0.704798, -3.66841)
+transform = Transform3D(-5, 0, 4.37114e-07, 0, 5, 0, -4.37114e-07, 0, -5, 6.71075, 0.704798, -3.66841)
 
 [node name="Window" parent="Cabin" instance=ExtResource("10_v6vcv")]
 transform = Transform3D(-1.47963e-07, 0, -5, 0, 5, 0, 3.385, 0, -2.18557e-07, -2.72411, 0.68299, 2.50351)
@@ -226,7 +233,7 @@ camera_attributes = SubResource("CameraAttributesPractical_lx3lc")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.643001, 0.765865, 0, -0.765865, 0.643001, -0.0188675, 3.93436, 0.13591)
 light_color = Color(1, 0.576471, 0.462745, 1)
-light_energy = 3.184
+light_energy = 2.003
 omni_range = 4.569
 omni_attenuation = 2.73208
 
@@ -267,6 +274,25 @@ spot_range = 8.508
 spot_attenuation = 0.812251
 spot_angle = 28.1
 spot_angle_attenuation = 10.1965
+
+[node name="DoorLight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.55708)
+
+[node name="DoorLight" type="MeshInstance3D" parent="DoorLight"]
+mesh = SubResource("SphereMesh_6og3m")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="DoorLight"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+light_color = Color(0.752941, 0, 0, 1)
+light_energy = 16.0
+light_indirect_energy = 2.476
+light_volumetric_fog_energy = 1.295
+light_specular = 0.0
+spot_range = 2.392
+spot_attenuation = 0.000212537
+spot_angle = 180.0
+spot_angle_attenuation = 0.00170029
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
