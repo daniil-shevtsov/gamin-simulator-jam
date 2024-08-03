@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://sfioka1a7gbx"
-path="res://.godot/imported/doorway_cabin_asset.glb-b0584bac1e3bb561293b8dc42c063ac1.scn"
+uid="uid://4ec32541oujg"
+path="res://.godot/imported/cabin_wall_asset.glb-3eb814e5707632b3c5f4508448866e25.scn"
 
 [deps]
 
-source_file="res://assets/models/cabin/doorway_cabin_asset.glb"
-dest_files=["res://.godot/imported/doorway_cabin_asset.glb-b0584bac1e3bb561293b8dc42c063ac1.scn"]
+source_file="res://assets/models/cabin/wall/cabin_wall_asset.glb"
+dest_files=["res://.godot/imported/cabin_wall_asset.glb-3eb814e5707632b3c5f4508448866e25.scn"]
 
 [params]
 

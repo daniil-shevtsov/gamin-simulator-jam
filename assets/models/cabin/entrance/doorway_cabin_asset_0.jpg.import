@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ba3t2jlpmpstt"
-path.s3tc="res://.godot/imported/doorway_cabin_asset_0.jpg-ea857be955cbd28b5419558a546886ae.s3tc.ctex"
+path.s3tc="res://.godot/imported/doorway_cabin_asset_0.jpg-b6cd49a5201dded3efd2b3536699df30.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/models/cabin/doorway_cabin_asset_0.jpg"
-dest_files=["res://.godot/imported/doorway_cabin_asset_0.jpg-ea857be955cbd28b5419558a546886ae.s3tc.ctex"]
+source_file="res://assets/models/cabin/entrance/doorway_cabin_asset_0.jpg"
+dest_files=["res://.godot/imported/doorway_cabin_asset_0.jpg-b6cd49a5201dded3efd2b3536699df30.s3tc.ctex"]
 
 [params]
 
