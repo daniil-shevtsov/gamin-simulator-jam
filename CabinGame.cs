@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class CabinGame : Node3D
 {
@@ -8,8 +9,12 @@ public partial class CabinGame : Node3D
 	private Node3D dummyCamera;
 	private CameraMarker initialMarker;
 	private CameraMarker knifeMarker;
+	private CameraMarker entranceMarker;
+
+	private List<CameraMarker> markersToCycle = new();
 
 	private CameraMarker currentCameraMarker = null;
+	private int currentMarkerIndex = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -18,9 +23,14 @@ public partial class CabinGame : Node3D
 		dummyCamera = GetNode<Node3D>("DummyCamera");
 		initialMarker = GetNode<CameraMarker>("InitialMarker");
 		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
+		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
 		currentCameraMarker = initialMarker;
 		SwitchTo(initialMarker);
+
+		markersToCycle.Add(initialMarker);
+		markersToCycle.Add(knifeMarker);
+		markersToCycle.Add(entranceMarker);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,14 +38,23 @@ public partial class CabinGame : Node3D
 	{
 		if (Input.IsActionJustReleased("jump"))
 		{
-			if (currentCameraMarker == initialMarker)
+			var newIndex = ++currentMarkerIndex;
+			if (newIndex > markersToCycle.Count - 1)
 			{
-				SwitchTo(knifeMarker);
+				newIndex = 0;
 			}
-			else if (currentCameraMarker == knifeMarker)
-			{
-				SwitchTo(initialMarker);
-			}
+
+			currentMarkerIndex = newIndex;
+
+			SwitchTo(markersToCycle[currentMarkerIndex]);
+			// if (currentCameraMarker == initialMarker)
+			// {
+			// 	SwitchTo(knifeMarker);
+			// }
+			// else if (currentCameraMarker == knifeMarker)
+			// {
+			// 	SwitchTo(initialMarker);
+			// }
 		}
 	}
 

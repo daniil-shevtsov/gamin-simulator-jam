@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=28 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://gk10cec3b8hd" path="res://assets/models/26-knife/maps/knife_lamina_H_BaseColor.tga" id="6_5vlg8"]
 [ext_resource type="PackedScene" uid="uid://j7mq84xorq0r" path="res://camera_marker.tscn" id="7_75bk6"]
 [ext_resource type="Shader" path="res://example.gdshader" id="8_xdbbs"]
+[ext_resource type="PackedScene" uid="uid://sfioka1a7gbx" path="res://assets/models/cabin/doorway_cabin_asset.glb" id="9_mxq0e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -213,6 +214,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.972151, -0.496366, 0.25308
 
 [node name="DummyCamera" type="Node3D" parent="."]
 
+[node name="Door" parent="." instance=ExtResource("9_mxq0e")]
+transform = Transform3D(4.22734, 0, 0, 0, 4.22734, 0, 0, 0, 4.22734, -5.79406, 0.704798, -3.66841)
+
+[node name="EntranceMarker" parent="." instance=ExtResource("7_75bk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0234469, 2.06084, -1.82577)
+
+[node name="LookAtMarker" parent="EntranceMarker" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41107, -0.732461, -1.57819)
+
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
 [editable path="KnifeMarker"]
+[editable path="EntranceMarker"]
