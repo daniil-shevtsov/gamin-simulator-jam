@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=31 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://sfioka1a7gbx" path="res://assets/models/cabin/entrance/doorway_cabin_asset.glb" id="9_mxq0e"]
 [ext_resource type="PackedScene" uid="uid://b7o0vc51i6x7v" path="res://assets/models/cabin/window/window_cabin_asset.glb" id="10_v6vcv"]
 [ext_resource type="PackedScene" uid="uid://4ec32541oujg" path="res://assets/models/cabin/wall/cabin_wall_asset.glb" id="11_2y30d"]
+[ext_resource type="PackedScene" path="res://assets/models/cabin/roof/roof_cabin_asset.glb" id="12_61vfk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -239,6 +240,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0234469, 2.06084, -1.82577)
 
 [node name="LookAtMarker" parent="EntranceMarker" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41107, -0.732461, -1.57819)
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("12_61vfk")]
+transform = Transform3D(-3.2259e-07, 0, 5.305, 0, 5, 0, -7.38, 0, -2.31889e-07, -3.74792, 4.9836, -8.66112)
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
