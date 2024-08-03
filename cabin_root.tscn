@@ -193,16 +193,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00128784, 0.000250101, 0.00
 shape = SubResource("BoxShape3D_8fg00")
 
 [node name="Door" parent="Cabin" instance=ExtResource("9_mxq0e")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -6.61669, 0.704798, -3.66841)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -6.50561, 0.704798, -3.66841)
 
 [node name="Window" parent="Cabin" instance=ExtResource("10_v6vcv")]
-transform = Transform3D(-1.47963e-07, 0, 5, 0, 5, 0, -3.385, 0, -2.18557e-07, -2.72411, 0.68299, -5.7805)
+transform = Transform3D(-1.47963e-07, 0, -5, 0, 5, 0, 3.385, 0, -2.18557e-07, -2.72411, 0.68299, 2.50351)
 
 [node name="Wall" parent="Cabin" instance=ExtResource("11_2y30d")]
-transform = Transform3D(-1.47963e-07, 0, 5, 0, 5, 0, -3.385, 0, -2.18557e-07, 2.98421, 0.672695, 2.16151)
+transform = Transform3D(-1.47963e-07, 0, -5, 0, 5, 0, 3.385, 0, -2.18557e-07, 2.98421, 0.672695, 2.16151)
 
 [node name="Wall2" parent="Cabin" instance=ExtResource("11_2y30d")]
-transform = Transform3D(-1.47963e-07, 0, 5, 0, 5, 0, -3.385, 0, -2.18557e-07, 2.98421, 0.672695, -1.66986)
+transform = Transform3D(-1.47963e-07, 0, -5, 0, 5, 0, 3.385, 0, -2.18557e-07, 2.98421, 0.672695, -1.66986)
 
 [node name="Wall3" parent="Cabin" instance=ExtResource("11_2y30d")]
 transform = Transform3D(-1.47963e-07, 0, 5, 0, 5, 0, -3.385, 0, -2.18557e-07, -2.71579, 0.672695, 2.33014)
@@ -215,6 +215,7 @@ transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, -0.00674686, 0.15987, -1.01419)
+visible = false
 mesh = SubResource("QuadMesh_wd0f3")
 surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 
@@ -224,6 +225,7 @@ camera_attributes = SubResource("CameraAttributesPractical_lx3lc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.643001, 0.765865, 0, -0.765865, 0.643001, 0, 4.57192, 3.38068)
+visible = false
 
 [node name="InitialMarker" parent="." instance=ExtResource("7_75bk6")]
 
