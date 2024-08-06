@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=48 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://be3rs4v3q0iwl" path="res://assets/models/jar/Vase_VaseCol01Rustic001_COL_2K.jpg" id="15_4apmb"]
 [ext_resource type="Texture2D" uid="uid://m1ttgfsugalk" path="res://assets/models/jar/Vase_VaseCol01Rustic001_GLOSS_2K.png" id="16_bcdkj"]
 [ext_resource type="Texture2D" uid="uid://drkuqdc25gnd3" path="res://assets/models/jar/Vase_VaseCol01Rustic001_NRM_2K.jpg" id="17_p7dex"]
+[ext_resource type="Shader" path="res://circle.gdshader" id="18_x4yu5"]
+[ext_resource type="Texture2D" uid="uid://dq78oeeuo4t4o" path="res://assets/textures/circle_white.png" id="19_3qcd8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -248,6 +250,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_krj57")
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_imqcl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lctyc"]
+render_priority = 0
+shader = ExtResource("18_x4yu5")
+shader_parameter/circle_image = ExtResource("19_3qcd8")
+
 [node name="CabinRoot" type="Node3D"]
 script = ExtResource("1_k0v8v")
 
@@ -404,6 +413,11 @@ skeleton = NodePath("")
 transform = Transform3D(2.72959, 0, 0, 0, 2.72959, 0, 0, 0, 2.72959, -20.047, 1.30589, 0.302141)
 mesh = SubResource("ArrayMesh_p67tw")
 skeleton = NodePath("")
+
+[node name="Circle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.659739, -0.751495, 0, 0.751495, 0.659739, 0.274159, 2.1321, -0.662298)
+mesh = SubResource("PlaneMesh_imqcl")
+surface_material_override/0 = SubResource("ShaderMaterial_lctyc")
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
