@@ -10,19 +10,22 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 color = texture(circle_image, UV);
-    
+	vec4 sampled = texture(circle_image, UV);
+    ALBEDO = sampled.rgb;
+	ALPHA = 1. - sampled.r;
+	
+	EMISSION = glow_color * glow_intensity * (1. - sampled.r);
     /*if (color.r > 0.5 && color.g > 0.5 && color.b > 0.5) {
         //ALPHA = 0.0; // Make white pixels transparent
     }  else */
-	if (color.r < 0.05 && color.g < 0.05 && color.b < 0.05) {
-        // Make black pixels glow
-        EMISSION = glow_color * glow_intensity;
-    } else {
-        EMISSION = vec3(0.0); // No glow zfor other colors
-    }
-	vec3 debug_color = vec3(UV, 0.0);
-	 ALBEDO = mix(color.rgb, debug_color, 0.);
+	//if (color.r < 0.05 && color.g < 0.05 && color.b < 0.05) {
+        //// Make black pixels glow
+        //EMISSION = glow_color * glow_intensity;
+    //} else {
+        //EMISSION = vec3(0.0); // No glow zfor other colors
+    //}
+	//vec3 debug_color = vec3(UV, 0.0);
+	 //ALBEDO = mix(color.rgb, debug_color, 0.);
 
     
     //ALBEDO = color.rgb;
