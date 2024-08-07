@@ -234,7 +234,7 @@ shader = ExtResource("18_x4yu5")
 shader_parameter/glow_color = Color(1, 1, 1, 1)
 shader_parameter/glow_intensity = 0.16
 shader_parameter/chalk_scale = 1.0
-shader_parameter/chalk_blend = 0.9
+shader_parameter/chalk_blend = 1.0
 shader_parameter/circle_image = ExtResource("19_3qcd8")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_f420m")
 
