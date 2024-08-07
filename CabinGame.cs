@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 public partial class CabinGame : Node3D
 {
@@ -17,6 +19,9 @@ public partial class CabinGame : Node3D
 	private AudioStreamPlayer actionPlayer;
 	private MeshInstance3D circle;
 	private ShaderMaterial circleMaterial;
+	private CameraMarker marker1;
+	private CameraMarker marker2;
+	private CameraMarker marker3;
 
 	private List<CameraMarker> markersToCycle = new();
 
@@ -39,6 +44,9 @@ public partial class CabinGame : Node3D
 		circle = (MeshInstance3D)FindChild("Circle");
 		circleMaterial = (ShaderMaterial)circle.GetSurfaceOverrideMaterial(0);
 		circleMaterial.SetShaderParameter("dissolve_value", 0f);
+		marker1 = (CameraMarker)FindChild("marker1");
+		marker2 = (CameraMarker)FindChild("marker2");
+		marker3 = (CameraMarker)FindChild("marker3");
 
 		currentCameraMarker = initialMarker;
 		SwitchTo(initialMarker);
@@ -48,13 +56,18 @@ public partial class CabinGame : Node3D
 		markersToCycle.Add(entranceMarker);
 	}
 
+	private void ToggleMoon()
+	{
+		scritchPlayer.Play();
+		doorLight.Visible = !doorLight.Visible;
+	}
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override async void _Process(double delta)
 	{
 		if (Input.IsActionJustReleased("moon"))
 		{
-			scritchPlayer.Play();
-			doorLight.Visible = !doorLight.Visible;
+			ToggleMoon();
 		}
 
 		if (Input.IsActionJustReleased("chalk"))
@@ -64,11 +77,29 @@ public partial class CabinGame : Node3D
 			{
 				finalValue = 0f;
 			}
+			var chalkAnimationDuration = 2.0f;
+			var durationThird = chalkAnimationDuration / 3f;
 			var tween = CreateTween();
-			tween.TweenProperty(circleMaterial, "shader_parameter/dissolve_value", finalValue, 1.0f);
+			tween.TweenProperty(circleMaterial, "shader_parameter/dissolve_value", finalValue, chalkAnimationDuration);
+			SwitchTo(marker1);
+			GD.Print("After switch marker1");
+			actionPlayer.Autoplay = true;
 			actionPlayer.Play();
+			await Task.Delay((int)(durationThird * 1000));
+			SwitchTo(marker2);
+			GD.Print("After switch marker2");
+
+			await Task.Delay((int)(durationThird * 1000));
+			SwitchTo(marker3);
+			GD.Print("After switch marker3");
+
+
 			await ToSignal(tween, "finished");
+			GD.Print("After tween finished");
 			actionPlayer.Stop();
+			SwitchTo(initialMarker);
+			await Task.Delay(300);
+			ToggleMoon();
 		}
 
 

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/chalk.mp3-c21db0535e1787cf83e2c06b48703e65.mp
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

@@ -399,6 +399,7 @@ spot_angle_attenuation = 10.1965
 
 [node name="DoorLight" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.55708)
+visible = false
 
 [node name="DoorLight" type="MeshInstance3D" parent="DoorLight"]
 mesh = SubResource("SphereMesh_6og3m")
@@ -449,9 +450,33 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_lctyc")
 
 [node name="SmallVase" type="MeshInstance3D" parent="Altar"]
-transform = Transform3D(3.22427, 0, 0, 0, 1.54424, 0, 0, 0, 3.22427, 0, 0, 0)
+transform = Transform3D(3.22427, 0, 0, 0, 1.54424, 0, 0, 0, 3.22427, 0, 0, -1.18748)
 mesh = SubResource("ArrayMesh_je1us")
 skeleton = NodePath("")
+
+[node name="marker1" parent="Altar" instance=ExtResource("7_75bk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.470444, 0.417353, 0.431438)
+
+[node name="CameraMarker" parent="Altar/marker1" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.529133, 0.2, -0.323141)
+
+[node name="LookAtMarker" parent="Altar/marker1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.232904, -0.417816, -0.986099)
+
+[node name="marker2" parent="Altar" instance=ExtResource("7_75bk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0309497, 0.417353, -0.0292459)
+
+[node name="LookAtMarker" parent="Altar/marker2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00510609, -0.417816, -0.66308)
+
+[node name="marker3" parent="Altar" instance=ExtResource("7_75bk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469449, 0.417353, 0.206651)
+
+[node name="CameraMarker" parent="Altar/marker3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, -0.213176)
+
+[node name="LookAtMarker" parent="Altar/marker3" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215008, -0.417816, -0.561492)
 
 [node name="ActionAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_8dryf")
@@ -460,3 +485,6 @@ stream = ExtResource("20_8dryf")
 [editable path="InitialMarker"]
 [editable path="KnifeMarker"]
 [editable path="EntranceMarker"]
+[editable path="Altar/marker1"]
+[editable path="Altar/marker2"]
+[editable path="Altar/marker3"]

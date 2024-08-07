@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/rain-indoor-cabin-loop-74664.mp3-134159ddb50a
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
