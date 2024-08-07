@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=50 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -218,12 +218,25 @@ shadow_mesh = SubResource("ArrayMesh_krj57")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_imqcl"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rgmsy"]
+noise_type = 3
+frequency = 0.184
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f420m"]
+width = 627
+height = 617
+noise = SubResource("FastNoiseLite_rgmsy")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lctyc"]
 render_priority = 0
 shader = ExtResource("18_x4yu5")
 shader_parameter/glow_color = Color(1, 1, 1, 1)
-shader_parameter/glow_intensity = 10.0
+shader_parameter/glow_intensity = 0.16
+shader_parameter/chalk_scale = 1.0
+shader_parameter/chalk_blend = 0.9
 shader_parameter/circle_image = ExtResource("19_3qcd8")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_f420m")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_juaed"]
 _surfaces = [{
@@ -320,7 +333,6 @@ transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, -0.00674686, 0.15987, -1.01419)
-visible = false
 mesh = SubResource("QuadMesh_wd0f3")
 surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 
