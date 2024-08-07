@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=53 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://drkuqdc25gnd3" path="res://assets/models/jar/Vase_VaseCol01Rustic001_NRM_2K.jpg" id="17_p7dex"]
 [ext_resource type="Shader" path="res://circle.gdshader" id="18_x4yu5"]
 [ext_resource type="Texture2D" uid="uid://dq78oeeuo4t4o" path="res://assets/textures/circle_white.png" id="19_3qcd8"]
+[ext_resource type="AudioStream" uid="uid://du6hev4vngs11" path="res://assets/sounds/chalk.mp3" id="20_8dryf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea7mu"]
 size = Vector3(6, 0.5, 8)
@@ -220,10 +221,11 @@ shadow_mesh = SubResource("ArrayMesh_krj57")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_bux4e"]
 noise_type = 3
-frequency = 0.0266
+frequency = 0.0744
 fractal_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ktmp"]
+invert = true
 noise = SubResource("FastNoiseLite_bux4e")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rgmsy"]
@@ -450,6 +452,9 @@ surface_material_override/0 = SubResource("ShaderMaterial_lctyc")
 transform = Transform3D(3.22427, 0, 0, 0, 1.54424, 0, 0, 0, 3.22427, 0, 0, 0)
 mesh = SubResource("ArrayMesh_je1us")
 skeleton = NodePath("")
+
+[node name="ActionAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_8dryf")
 
 [editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
