@@ -2,30 +2,31 @@ shader_type spatial;
 
 uniform sampler2D circle_image;
 
+uniform vec3 glow_color = vec3(1.0, 1.0, 1.0);
+uniform float glow_intensity : hint_range(0.0, 10.0) = 10.0;
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-	//vec4 sampled = texture(circle_image, UV);
-	//
-	//ALBEDO = sampled.rgb;
-	//if(sampled.rgb == vec3(1.)) {
-		//ALPHA = 0.;
-	//} else {
-		//ALPHA = sampled.a;
-	//}
 	vec4 color = texture(circle_image, UV);
     
-    // Check if the pixel is white
-    if (color.r > 0.5 && color.g > 0.5 && color.b > 0.5) {
-        color.a = 0.0; // Make white pixels transparent
+    /*if (color.r > 0.5 && color.g > 0.5 && color.b > 0.5) {
+        //ALPHA = 0.0; // Make white pixels transparent
+    }  else */
+	if (color.r < 0.05 && color.g < 0.05 && color.b < 0.05) {
+        // Make black pixels glow
+        EMISSION = glow_color * glow_intensity;
+    } else {
+        EMISSION = vec3(0.0); // No glow zfor other colors
     }
+	vec3 debug_color = vec3(UV, 0.0);
+	 ALBEDO = mix(color.rgb, debug_color, 0.);
+
     
-    ALBEDO = color.rgb;
-    ALPHA = color.a;
-	
+    //ALBEDO = color.rgb;
+    //ALPHA = color.a;
 }
 
 //void light() {

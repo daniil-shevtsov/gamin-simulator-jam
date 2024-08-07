@@ -255,6 +255,8 @@ shadow_mesh = SubResource("ArrayMesh_krj57")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lctyc"]
 render_priority = 0
 shader = ExtResource("18_x4yu5")
+shader_parameter/glow_color = Vector3(1, 1, 1)
+shader_parameter/glow_intensity = 5.061
 shader_parameter/circle_image = ExtResource("19_3qcd8")
 
 [node name="CabinRoot" type="Node3D"]
@@ -318,6 +320,7 @@ transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, -0.00674686, 0.15987, -1.01419)
+visible = false
 mesh = SubResource("QuadMesh_wd0f3")
 surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
 
@@ -415,7 +418,10 @@ mesh = SubResource("ArrayMesh_p67tw")
 skeleton = NodePath("")
 
 [node name="Circle" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.659739, -0.751495, 0, 0.751495, 0.659739, 0.274159, 2.1321, 1.0378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.074159, 1.30453, 1.0378)
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
 mesh = SubResource("PlaneMesh_imqcl")
 surface_material_override/0 = SubResource("ShaderMaterial_lctyc")
 
