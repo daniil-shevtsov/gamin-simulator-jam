@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=52 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -218,6 +218,14 @@ shadow_mesh = SubResource("ArrayMesh_krj57")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_imqcl"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bux4e"]
+noise_type = 3
+frequency = 0.0266
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ktmp"]
+noise = SubResource("FastNoiseLite_bux4e")
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rgmsy"]
 noise_type = 3
 frequency = 0.3241
@@ -231,12 +239,14 @@ noise = SubResource("FastNoiseLite_rgmsy")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lctyc"]
 render_priority = 0
 shader = ExtResource("18_x4yu5")
+shader_parameter/dissolve_value = 1.0
 shader_parameter/glow_color = Color(1, 1, 1, 1)
 shader_parameter/glow_intensity = 0.16
 shader_parameter/chalk_scale = 1.0
 shader_parameter/chalk_blend = 1.0
 shader_parameter/circle_image = ExtResource("19_3qcd8")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_f420m")
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_2ktmp")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_juaed"]
 _surfaces = [{
