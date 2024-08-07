@@ -220,7 +220,7 @@ shadow_mesh = SubResource("ArrayMesh_krj57")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rgmsy"]
 noise_type = 3
-frequency = 0.184
+frequency = 0.3241
 domain_warp_enabled = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f420m"]

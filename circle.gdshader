@@ -17,11 +17,11 @@ void fragment() {
 	vec4 sampled = texture(circle_image, UV);
 	vec4 color = vec4(glow_color, 1.0);
 	vec4 noise = texture(noise_texture, UV * chalk_scale);
-	vec4 chalk_color = mix(color, vec4(vec3(1.0), 1. - noise.r),  chalk_blend); // Adjust blending as necessary
+	float chalk_alpha = mix(1., 1. - noise.r,  chalk_blend); // Adjust blending as necessary
 
-	ALPHA = (1. - sampled.r) * chalk_color.a;
+	ALPHA = (1. - sampled.r) * chalk_alpha;
     ALBEDO = color.rgb;
-	EMISSION = glow_color * glow_intensity * (1. - sampled.r) * (chalk_color.a);
+	EMISSION = glow_color * glow_intensity * (1. - sampled.r) * chalk_alpha;
 }
 
 //void light() {
