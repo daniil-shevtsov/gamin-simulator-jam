@@ -2,7 +2,7 @@ shader_type spatial;
 
 uniform sampler2D circle_image;
 
-uniform vec3 glow_color = vec3(1.0, 1.0, 1.0);
+uniform vec3 glow_color: source_color;
 uniform float glow_intensity : hint_range(0.0, 10.0) = 10.0;
 
 void vertex() {
