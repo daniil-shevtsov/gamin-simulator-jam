@@ -415,7 +415,7 @@ mesh = SubResource("ArrayMesh_p67tw")
 skeleton = NodePath("")
 
 [node name="Circle" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.659739, -0.751495, 0, 0.751495, 0.659739, 0.274159, 2.1321, -0.662298)
+transform = Transform3D(1, 0, 0, 0, 0.659739, -0.751495, 0, 0.751495, 0.659739, 0.274159, 2.1321, 1.0378)
 mesh = SubResource("PlaneMesh_imqcl")
 surface_material_override/0 = SubResource("ShaderMaterial_lctyc")
 
