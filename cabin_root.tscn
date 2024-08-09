@@ -1,9 +1,8 @@
-[gd_scene load_steps=53 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=52 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
 [ext_resource type="Texture2D" uid="uid://dm23sphx8m2a1" path="res://assets/textures/table_256.jpg" id="3_amoxy"]
-[ext_resource type="PackedScene" uid="uid://cub6bki1q6aqh" path="res://assets/models/26-knife/knife.glb" id="4_7jbh0"]
 [ext_resource type="Texture2D" uid="uid://c5emcn3fsokmg" path="res://assets/models/26-knife/maps/knife_cabo_H1_BaseColor.tga" id="5_fsow0"]
 [ext_resource type="Texture2D" uid="uid://gk10cec3b8hd" path="res://assets/models/26-knife/maps/knife_lamina_H_BaseColor.tga" id="6_5vlg8"]
 [ext_resource type="PackedScene" uid="uid://j7mq84xorq0r" path="res://camera_marker.tscn" id="7_75bk6"]
@@ -310,13 +309,17 @@ mesh = SubResource("BoxMesh_2u1vc")
 [node name="Knife" type="StaticBody3D" parent="Cabin"]
 transform = Transform3D(1.54133, 1.9295, 1.70334, 2.50305, -1.58597, -0.468436, 0.599197, 1.66185, -2.42471, 0.56158, 1.48524, 1.27353)
 
-[node name="knife" parent="Cabin/Knife" instance=ExtResource("4_7jbh0")]
+[node name="knife" type="Node3D" parent="Cabin/Knife"]
 
-[node name="cabo_L" parent="Cabin/Knife/knife" index="0"]
+[node name="cabo_L" type="MeshInstance3D" parent="Cabin/Knife/knife"]
+transform = Transform3D(0.01, 0, 0, 0, -3.57628e-09, -0.01, 0, 0.01, -3.57628e-09, 0.0583228, 0, 0)
 mesh = SubResource("ArrayMesh_dvteo")
+skeleton = NodePath("")
 
-[node name="lamina_L" parent="Cabin/Knife/knife" index="1"]
+[node name="lamina_L" type="MeshInstance3D" parent="Cabin/Knife/knife"]
+transform = Transform3D(0.01, 0, 0, 0, -3.57628e-09, -0.01, 0, 0.01, -3.57628e-09, 0, 0, 0)
 mesh = SubResource("ArrayMesh_a537s")
+skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cabin/Knife"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00128784, 0.000250101, 0.000756837)
@@ -347,6 +350,9 @@ transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, -0.00674686, 0.15987, -1.01419)
 mesh = SubResource("QuadMesh_wd0f3")
 surface_material_override/0 = SubResource("ShaderMaterial_6vt6k")
+
+[node name="GrabbedPosition" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0.299912, -0.208933, -0.892333)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_a0wmc")
@@ -441,7 +447,6 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30069, 1.00644)
 
 [node name="Circle" type="MeshInstance3D" parent="Altar"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 cast_shadow = 0
 ignore_occlusion_culling = true
 gi_mode = 0
@@ -481,7 +486,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215008, -0.417816, -0.56149
 [node name="ActionAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_8dryf")
 
-[editable path="Cabin/Knife/knife"]
 [editable path="InitialMarker"]
 [editable path="KnifeMarker"]
 [editable path="EntranceMarker"]

@@ -11,6 +11,8 @@ public partial class CabinGame : Node3D
 	private Node3D dummyCamera;
 	private CameraMarker initialMarker;
 	private CameraMarker knifeMarker;
+	private StaticBody3D knife;
+	private Transform3D knifeDefaultTransform;
 	private CameraMarker entranceMarker;
 
 	private Node3D doorLight;
@@ -34,7 +36,11 @@ public partial class CabinGame : Node3D
 		camera3D = GetNode<Camera3D>("Camera3D");
 		dummyCamera = GetNode<Node3D>("DummyCamera");
 		initialMarker = GetNode<CameraMarker>("InitialMarker");
+
 		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
+		knife = (StaticBody3D)FindChild("Knife");
+		knifeDefaultTransform = knife.GlobalTransform;
+
 		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
 		doorLight = GetNode<Node3D>("DoorLight");
@@ -68,6 +74,23 @@ public partial class CabinGame : Node3D
 		if (Input.IsActionJustReleased("moon"))
 		{
 			ToggleMoon();
+		}
+
+		if (Input.IsActionJustReleased("take"))
+		{
+			if (currentCameraMarker == knifeMarker)
+			{
+				if (knife.Transform == knifeDefaultTransform)
+				{
+					knife.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
+					knife.Reparent(camera3D);
+				}
+				else
+				{
+					knife.Reparent(this);
+					knife.GlobalTransform = knifeDefaultTransform;
+				}
+			}
 		}
 
 		if (Input.IsActionJustReleased("chalk"))
