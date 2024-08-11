@@ -13,11 +13,9 @@ public partial class CabinGame : Node3D
 
 	private CameraMarker knifeMarker;
 	private Item knife;
-	private Transform3D knifeDefaultTransform;
 
 	private CameraMarker chalkMarker;
 	private Item chalk;
-	private Transform3D chalkDefaultTransform;
 
 	private CameraMarker entranceMarker;
 
@@ -46,11 +44,9 @@ public partial class CabinGame : Node3D
 
 		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
 		knife = (Item)FindChild("Knife");
-		knifeDefaultTransform = knife.GlobalTransform;
 
 		chalkMarker = GetNode<CameraMarker>("ChalkMarker");
 		chalk = (Item)FindChild("Chalk");
-		chalkDefaultTransform = chalk.GlobalTransform;
 
 		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
@@ -164,16 +160,6 @@ public partial class CabinGame : Node3D
 
 	private void ToggleGrabItem(Item item)
 	{
-		Transform3D? defaultTransform = null;
-		if (item == chalk)
-		{
-			defaultTransform = chalkDefaultTransform;
-		}
-		else if (item == knife)
-		{
-			defaultTransform = knifeDefaultTransform;
-		}
-
 		if (currentItem == null)
 		{
 			currentItem = item;
@@ -185,10 +171,7 @@ public partial class CabinGame : Node3D
 			currentItem = null;
 
 			item.Reparent(this);
-			if (defaultTransform != null)
-			{
-				item.GlobalTransform = (Transform3D)defaultTransform;
-			}
+			item.GlobalTransform = item.defaultTransform;
 		}
 	}
 }
