@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class CabinGame : Node3D
@@ -117,6 +118,29 @@ public partial class CabinGame : Node3D
 			SwitchTo(initialMarker);
 			await Task.Delay(300);
 			ToggleMoon();
+		}
+
+		if (Input.IsActionJustReleased("left"))
+		{
+			// var distances = markersToCycle.Select(marker => marker.GlobalPosition - currentCameraMarker.GlobalPosition);
+			var closest = markersToCycle
+			.Where(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).X < 0)
+			.OrderBy(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).Z)
+			.ThenBy(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).X)
+			.ToList()
+			.First();
+			SwitchTo(closest);
+		}
+		else if (Input.IsActionJustReleased("right"))
+		{
+			// var distances = markersToCycle.Select(marker => marker.GlobalPosition - currentCameraMarker.GlobalPosition);
+			var closest = markersToCycle
+		.Where(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).X > 0)
+		.OrderBy(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).Z)
+		.ThenBy(marker => (marker.GlobalPosition - currentCameraMarker.GlobalPosition).X)
+		.ToList()
+		.First();
+			SwitchTo(closest);
 		}
 
 
