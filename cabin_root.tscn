@@ -351,9 +351,10 @@ shape = SubResource("BoxShape3D_d3amd")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cabin/Table"]
 mesh = SubResource("BoxMesh_2u1vc")
 
-[node name="Knife" type="StaticBody3D" parent="Cabin"]
+[node name="Knife" type="StaticBody3D" parent="Cabin" node_paths=PackedStringArray("cameraMarker")]
 transform = Transform3D(1.54133, 1.9295, 1.70334, 2.50305, -1.58597, -0.468436, 0.599197, 1.66185, -2.42471, 0.56158, 1.48524, 1.27353)
 script = ExtResource("19_pibf5")
+cameraMarker = NodePath("../../KnifeMarker")
 
 [node name="knife" type="Node3D" parent="Cabin/Knife"]
 
@@ -535,10 +536,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, -0.213176)
 [node name="LookAtMarker" parent="Altar/marker3" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215008, -0.417816, -0.561492)
 
-[node name="Chalk" type="StaticBody3D" parent="."]
+[node name="Chalk" type="StaticBody3D" parent="." node_paths=PackedStringArray("cameraMarker")]
 transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, -0.72036, 1.4061, 1.91014)
 script = ExtResource("19_pibf5")
 type = 1
+cameraMarker = NodePath("../ChalkMarker")
 
 [node name="Cylinder_Material_001_0" type="MeshInstance3D" parent="Chalk"]
 mesh = SubResource("ArrayMesh_rmyie")

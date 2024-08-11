@@ -11,10 +11,7 @@ public partial class CabinGame : Node3D
 	private Node3D dummyCamera;
 	private CameraMarker initialMarker;
 
-	private CameraMarker knifeMarker;
 	private Item knife;
-
-	private CameraMarker chalkMarker;
 	private Item chalk;
 
 	private CameraMarker entranceMarker;
@@ -30,6 +27,7 @@ public partial class CabinGame : Node3D
 	private CameraMarker marker3;
 
 	private List<CameraMarker> markersToCycle = new();
+	private List<Item> allItems = new();
 
 	private CameraMarker currentCameraMarker = null;
 	private Item currentItem = null;
@@ -42,11 +40,11 @@ public partial class CabinGame : Node3D
 		dummyCamera = GetNode<Node3D>("DummyCamera");
 		initialMarker = GetNode<CameraMarker>("InitialMarker");
 
-		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
 		knife = (Item)FindChild("Knife");
-
-		chalkMarker = GetNode<CameraMarker>("ChalkMarker");
 		chalk = (Item)FindChild("Chalk");
+
+		allItems.Add(knife);
+		allItems.Add(chalk);
 
 		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
@@ -65,8 +63,7 @@ public partial class CabinGame : Node3D
 		SwitchTo(initialMarker);
 
 		markersToCycle.Add(initialMarker);
-		markersToCycle.Add(chalkMarker);
-		markersToCycle.Add(knifeMarker);
+		allItems.ForEach(item => markersToCycle.Add(item.cameraMarker));
 		markersToCycle.Add(entranceMarker);
 	}
 
@@ -86,14 +83,8 @@ public partial class CabinGame : Node3D
 
 		if (Input.IsActionJustReleased("take"))
 		{
-			if (currentCameraMarker == knifeMarker)
-			{
-				ToggleGrabItem(knife);
-			}
-			else if (currentCameraMarker == chalkMarker)
-			{
-				ToggleGrabItem(chalk);
-			}
+			var itemToGrab = allItems.Find(item => item.cameraMarker == currentCameraMarker);
+			ToggleGrabItem(itemToGrab);
 		}
 
 		if (Input.IsActionJustReleased("chalk") && currentItem == chalk)

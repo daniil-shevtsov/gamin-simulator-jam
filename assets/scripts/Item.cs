@@ -8,6 +8,9 @@ public partial class Item : StaticBody3D
 	[Export]
 	public ItemType type;
 
+	[Export]
+	public CameraMarker cameraMarker;
+
 	public Transform3D defaultTransform;
 
 	// Called when the node enters the scene tree for the first time.
