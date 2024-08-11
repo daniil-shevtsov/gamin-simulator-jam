@@ -88,35 +88,15 @@ public partial class CabinGame : Node3D
 			ToggleMoon();
 		}
 
-		if (Input.IsActionJustReleased("take") && currentItem == null)
+		if (Input.IsActionJustReleased("take"))
 		{
 			if (currentCameraMarker == knifeMarker)
 			{
-				currentItem = knife;
-				if (knife.Transform == knifeDefaultTransform)
-				{
-					knife.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
-					knife.Reparent(camera3D);
-				}
-				else
-				{
-					knife.Reparent(this);
-					knife.GlobalTransform = knifeDefaultTransform;
-				}
+				ToggleGrabItem(knife);
 			}
 			else if (currentCameraMarker == chalkMarker)
 			{
-				currentItem = chalk;
-				if (chalk.Transform == chalkDefaultTransform)
-				{
-					chalk.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
-					chalk.Reparent(camera3D);
-				}
-				else
-				{
-					chalk.Reparent(this);
-					chalk.GlobalTransform = chalkDefaultTransform;
-				}
+				ToggleGrabItem(chalk);
 			}
 		}
 
@@ -179,6 +159,36 @@ public partial class CabinGame : Node3D
 			rotationTween.SetParallel(true);
 			rotationTween.TweenProperty(camera3D, new NodePath("global_position"), dummyCamera.GlobalPosition, 0.3f).SetTrans(Tween.TransitionType.Spring);
 			rotationTween.TweenProperty(camera3D, new NodePath("rotation"), dummyCamera.Rotation, 0.3f).SetTrans(Tween.TransitionType.Spring);
+		}
+	}
+
+	private void ToggleGrabItem(Item item)
+	{
+		Transform3D? defaultTransform = null;
+		if (item == chalk)
+		{
+			defaultTransform = chalkDefaultTransform;
+		}
+		else if (item == knife)
+		{
+			defaultTransform = knifeDefaultTransform;
+		}
+
+		if (currentItem == null)
+		{
+			currentItem = item;
+			item.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
+			item.Reparent(camera3D);
+		}
+		else if (currentItem == item)
+		{
+			currentItem = null;
+
+			item.Reparent(this);
+			if (defaultTransform != null)
+			{
+				item.GlobalTransform = (Transform3D)defaultTransform;
+			}
 		}
 	}
 }
