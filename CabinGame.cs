@@ -10,9 +10,15 @@ public partial class CabinGame : Node3D
 	private Camera3D camera3D;
 	private Node3D dummyCamera;
 	private CameraMarker initialMarker;
+
 	private CameraMarker knifeMarker;
-	private StaticBody3D knife;
+	private Item knife;
 	private Transform3D knifeDefaultTransform;
+
+	private CameraMarker chalkMarker;
+	private Item chalk;
+	private Transform3D chalkDefaultTransform;
+
 	private CameraMarker entranceMarker;
 
 	private Node3D doorLight;
@@ -28,6 +34,7 @@ public partial class CabinGame : Node3D
 	private List<CameraMarker> markersToCycle = new();
 
 	private CameraMarker currentCameraMarker = null;
+	private Item currentItem = null;
 	private int currentMarkerIndex = 0;
 
 	// Called when the node enters the scene tree for the first time.
@@ -38,8 +45,12 @@ public partial class CabinGame : Node3D
 		initialMarker = GetNode<CameraMarker>("InitialMarker");
 
 		knifeMarker = GetNode<CameraMarker>("KnifeMarker");
-		knife = (StaticBody3D)FindChild("Knife");
+		knife = (Item)FindChild("Knife");
 		knifeDefaultTransform = knife.GlobalTransform;
+
+		chalkMarker = GetNode<CameraMarker>("ChalkMarker");
+		chalk = (Item)FindChild("Chalk");
+		chalkDefaultTransform = chalk.GlobalTransform;
 
 		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
@@ -58,6 +69,7 @@ public partial class CabinGame : Node3D
 		SwitchTo(initialMarker);
 
 		markersToCycle.Add(initialMarker);
+		markersToCycle.Add(chalkMarker);
 		markersToCycle.Add(knifeMarker);
 		markersToCycle.Add(entranceMarker);
 	}
@@ -76,10 +88,11 @@ public partial class CabinGame : Node3D
 			ToggleMoon();
 		}
 
-		if (Input.IsActionJustReleased("take"))
+		if (Input.IsActionJustReleased("take") && currentItem == null)
 		{
 			if (currentCameraMarker == knifeMarker)
 			{
+				currentItem = knife;
 				if (knife.Transform == knifeDefaultTransform)
 				{
 					knife.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
@@ -91,9 +104,23 @@ public partial class CabinGame : Node3D
 					knife.GlobalTransform = knifeDefaultTransform;
 				}
 			}
+			else if (currentCameraMarker == chalkMarker)
+			{
+				currentItem = chalk;
+				if (chalk.Transform == chalkDefaultTransform)
+				{
+					chalk.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
+					chalk.Reparent(camera3D);
+				}
+				else
+				{
+					chalk.Reparent(this);
+					chalk.GlobalTransform = chalkDefaultTransform;
+				}
+			}
 		}
 
-		if (Input.IsActionJustReleased("chalk"))
+		if (Input.IsActionJustReleased("chalk") && currentItem == chalk)
 		{
 			var finalValue = 1f;
 			if ((float)circleMaterial.GetShaderParameter("dissolve_value") > 0f)

@@ -417,6 +417,12 @@ visible = false
 
 [node name="InitialMarker" parent="." instance=ExtResource("7_75bk6")]
 
+[node name="ChalkMarker" parent="." instance=ExtResource("7_75bk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32697, 1.57575, 1.85949)
+
+[node name="LookAtMarker" parent="ChalkMarker" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.58701, -0.181913, 0.0130703)
+
 [node name="KnifeMarker" parent="." instance=ExtResource("7_75bk6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5475, 2.06084, 1.04492)
 
@@ -546,6 +552,7 @@ shape = SubResource("CylinderShape3D_hcw3o")
 stream = ExtResource("20_8dryf")
 
 [editable path="InitialMarker"]
+[editable path="ChalkMarker"]
 [editable path="KnifeMarker"]
 [editable path="EntranceMarker"]
 [editable path="Altar/marker1"]
