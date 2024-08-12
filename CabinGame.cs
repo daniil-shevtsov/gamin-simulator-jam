@@ -123,14 +123,14 @@ public partial class CabinGame : Node3D
 		if (Input.IsActionJustReleased("left"))
 		{
 			GD.Print($"left clicked when at {currentCameraMarker.GlobalPosition}");
-			var cameraRight = currentCameraMarker.GlobalTransform.Basis.X;
+			var cameraRight = camera3D.GlobalTransform.Basis.X;
 
 			var closest = markersToCycle
 			.Select(marker => new
 			{
 				Marker = marker,
-				ToMarker = marker.GlobalPosition - currentCameraMarker.GlobalPosition,
-				DotProduct = cameraRight.Dot(marker.GlobalPosition - currentCameraMarker.GlobalPosition)
+				ToMarker = marker.GlobalPosition - camera3D.GlobalPosition,
+				DotProduct = cameraRight.Dot(marker.GlobalPosition - camera3D.GlobalPosition)
 			})
 			.Where(entry => entry.Marker != currentCameraMarker && entry.DotProduct < 0)  // Points to the left of the camera
 			.OrderBy(entry => -entry.ToMarker.Z)    // Sort by Z distance (closest first)
@@ -167,21 +167,27 @@ public partial class CabinGame : Node3D
 		}
 		else if (Input.IsActionJustReleased("right"))
 		{
-			var cameraRight = currentCameraMarker.GlobalTransform.Basis.X;
+			var cameraRight = camera3D.GlobalTransform.Basis.X;
 
 			var closest = markersToCycle
 			.Select(marker => new
 			{
 				Marker = marker,
-				ToMarker = marker.GlobalPosition - currentCameraMarker.GlobalPosition,
-				DotProduct = cameraRight.Dot(marker.GlobalPosition - currentCameraMarker.GlobalPosition)
+				ToMarker = marker.GlobalPosition - camera3D.GlobalPosition,
+				DotProduct = cameraRight.Dot(marker.GlobalPosition - camera3D.GlobalPosition)
 			})
-			.Where(entry => entry.Marker != currentCameraMarker && entry.DotProduct > 0)  // Points to the right of the camera
+			.Where(entry =>
+			{
+				GD.Print($"Camera Right Vector: {cameraRight}");
+				GD.Print($"{entry.Marker.Name} ToMarker: {entry.ToMarker} camera facing direction={camera3D.Rotation} current marker={currentCameraMarker.GlobalPosition} entrance marker= {entry.Marker.GlobalPosition}");
+				GD.Print($"{entry.Marker.Name} {entry.DotProduct} > 0 = {entry.DotProduct > 0}");
+				return entry.Marker != currentCameraMarker && entry.DotProduct > 0;
+			})  // Points to the right of the camera
 			.OrderBy(entry => -entry.ToMarker.Z)    // Sort by Z distance (closest first)
 			.ThenBy(entry => entry.ToMarker.Length())  // Sort by overall distance to the camera
 			.ThenBy(entry => entry.DotProduct)     // Sort by rightmost (more positive) first
 			.Select(entry => entry.Marker) // Select the marker's global position
-			.FirstOrDefault(); ;
+			.FirstOrDefault();
 			// GD.Print($"right clicked when at {currentCameraMarker.GlobalPosition}");
 			// var closest = markersToCycle
 			// .Select(marker =>
