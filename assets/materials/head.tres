@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://g4s8u5ij1fd6"]
+
+[ext_resource type="Shader" path="res://assets/shaders/head.gdshader" id="1_7cpmd"]
+[ext_resource type="Texture2D" uid="uid://bmlnr3d58nk5q" path="res://assets/textures/head.jpg" id="2_xfw2d"]
+
+[sub_resource type="Gradient" id="Gradient_vpmab"]
+offsets = PackedFloat32Array(0, 0.00352113, 0.056338)
+colors = PackedColorArray(0, 0, 0, 1, 0.271127, 0.271127, 0.271127, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fbs2e"]
+gradient = SubResource("Gradient_vpmab")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_7cpmd")
+shader_parameter/alpha = 1.0
+shader_parameter/speed = 2.0
+shader_parameter/distortion = 0.24
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/albedo_texture = ExtResource("2_xfw2d")
+shader_parameter/noise_texture = SubResource("GradientTexture1D_fbs2e")
