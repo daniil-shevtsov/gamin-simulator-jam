@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=63 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -11,6 +11,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dab5lie7j1t4d" path="res://assets/models/head/Statue.OBJ" id="10_bcgb0"]
 [ext_resource type="PackedScene" uid="uid://b7o0vc51i6x7v" path="res://assets/models/cabin/window/window_cabin_asset.glb" id="10_v6vcv"]
 [ext_resource type="PackedScene" uid="uid://4ec32541oujg" path="res://assets/models/cabin/wall/cabin_wall_asset.glb" id="11_2y30d"]
+[ext_resource type="Material" uid="uid://g4s8u5ij1fd6" path="res://assets/materials/head.tres" id="11_dj05d"]
 [ext_resource type="Texture2D" uid="uid://bmlnr3d58nk5q" path="res://assets/textures/head.jpg" id="11_gnb6s"]
 [ext_resource type="PackedScene" uid="uid://d05fwguo25585" path="res://assets/models/cabin/roof/roof_cabin_asset.glb" id="12_61vfk"]
 [ext_resource type="AudioStream" uid="uid://c7jqi4wrdkyh8" path="res://assets/sounds/rain-indoor-cabin-loop-74664.mp3" id="13_ot8y1"]
@@ -138,6 +139,10 @@ size = Vector3(0.222864, 0.009021, 0.0395996)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eyirm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24f7o"]
+next_pass = ExtResource("11_dj05d")
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 1, 1, 0)
 albedo_texture = ExtResource("11_gnb6s")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]
