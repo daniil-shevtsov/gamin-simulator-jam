@@ -7,208 +7,246 @@ using System.Threading.Tasks;
 
 public partial class CabinGame : Node3D
 {
+    private Camera3D camera3D;
+    private Node3D dummyCamera;
+    private CameraMarker initialMarker;
 
-	private Camera3D camera3D;
-	private Node3D dummyCamera;
-	private CameraMarker initialMarker;
+    private Node3D head;
 
-	private Item knife;
-	private Item chalk;
+    private Item knife;
+    private Item chalk;
 
-	private CameraMarker entranceMarker;
+    private CameraMarker entranceMarker;
 
-	private Node3D doorLight;
-	private AudioStreamPlayer scritchPlayer;
+    private Node3D doorLight;
+    private AudioStreamPlayer scritchPlayer;
 
-	private AudioStreamPlayer actionPlayer;
-	private MeshInstance3D circle;
-	private ShaderMaterial circleMaterial;
-	private CameraMarker marker1;
-	private CameraMarker marker2;
-	private CameraMarker marker3;
+    private AudioStreamPlayer actionPlayer;
+    private MeshInstance3D circle;
+    private ShaderMaterial circleMaterial;
+    private CameraMarker marker1;
+    private CameraMarker marker2;
+    private CameraMarker marker3;
 
-	private List<CameraMarker> markersToCycle = new();
-	private List<Item> allItems = new();
+    private List<CameraMarker> markersToCycle = new();
+    private List<Item> allItems = new();
 
-	private CameraMarker currentCameraMarker = null;
-	private Item currentItem = null;
-	private int currentMarkerIndex = 0;
+    private CameraMarker currentCameraMarker = null;
+    private Item currentItem = null;
+    private int currentMarkerIndex = 0;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		camera3D = GetNode<Camera3D>("Camera3D");
-		dummyCamera = GetNode<Node3D>("DummyCamera");
-		initialMarker = GetNode<CameraMarker>("InitialMarker");
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        camera3D = GetNode<Camera3D>("Camera3D");
+        dummyCamera = GetNode<Node3D>("DummyCamera");
+        initialMarker = GetNode<CameraMarker>("InitialMarker");
 
-		knife = (Item)FindChild("Knife");
-		chalk = (Item)FindChild("Chalk");
+        knife = (Item)FindChild("Knife");
+        chalk = (Item)FindChild("Chalk");
+        head = (Node3D)FindChild("Head");
+        var headStart = head.GlobalPosition;
+        var difference = new Vector3(0f, 1f, 0f) * 0.05f;
+        var headEnd = head.GlobalPosition + difference;
+        var time = 0.9f;
+        var transitionType = Tween.TransitionType.Sine;
+        var rotationTween = CreateTween();
+        rotationTween.SetLoops();
+        rotationTween
+            .TweenProperty(head, new NodePath("global_position"), headEnd, time)
+            .From(headStart)
+            .SetTrans(transitionType);
+        rotationTween
+            .TweenProperty(head, new NodePath("global_position"), headStart, time)
+            .From(headEnd)
+            .SetTrans(transitionType);
+        // rotationTween
+        //     .TweenProperty(camera3D, new NodePath("rotation"), dummyCamera.Rotation, 0.3f)
+        //     .SetTrans(Tween.TransitionType.Spring);
 
-		allItems.Add(knife);
-		allItems.Add(chalk);
+        allItems.Add(knife);
+        allItems.Add(chalk);
 
-		entranceMarker = GetNode<CameraMarker>("EntranceMarker");
+        entranceMarker = GetNode<CameraMarker>("EntranceMarker");
 
-		doorLight = GetNode<Node3D>("DoorLight");
-		scritchPlayer = GetNode<AudioStreamPlayer>("ScritchAudioPlayer");
+        doorLight = GetNode<Node3D>("DoorLight");
+        scritchPlayer = GetNode<AudioStreamPlayer>("ScritchAudioPlayer");
 
-		actionPlayer = GetNode<AudioStreamPlayer>("ActionAudioPlayer");
-		circle = (MeshInstance3D)FindChild("Circle");
-		circleMaterial = (ShaderMaterial)circle.GetSurfaceOverrideMaterial(0);
-		circleMaterial.SetShaderParameter("dissolve_value", 0f);
-		marker1 = (CameraMarker)FindChild("marker1");
-		marker2 = (CameraMarker)FindChild("marker2");
-		marker3 = (CameraMarker)FindChild("marker3");
+        actionPlayer = GetNode<AudioStreamPlayer>("ActionAudioPlayer");
+        circle = (MeshInstance3D)FindChild("Circle");
+        circleMaterial = (ShaderMaterial)circle.GetSurfaceOverrideMaterial(0);
+        circleMaterial.SetShaderParameter("dissolve_value", 0f);
+        marker1 = (CameraMarker)FindChild("marker1");
+        marker2 = (CameraMarker)FindChild("marker2");
+        marker3 = (CameraMarker)FindChild("marker3");
 
-		currentCameraMarker = initialMarker;
-		SwitchTo(initialMarker);
+        currentCameraMarker = initialMarker;
+        SwitchTo(initialMarker);
 
-		markersToCycle.Add(initialMarker);
-		allItems.ForEach(item => markersToCycle.Add(item.cameraMarker));
-		markersToCycle.Add(entranceMarker);
-	}
+        markersToCycle.Add(initialMarker);
+        allItems.ForEach(item => markersToCycle.Add(item.cameraMarker));
+        markersToCycle.Add(entranceMarker);
+    }
 
-	private void ToggleMoon()
-	{
-		scritchPlayer.Play();
-		doorLight.Visible = !doorLight.Visible;
-	}
+    private void ToggleMoon()
+    {
+        scritchPlayer.Play();
+        doorLight.Visible = !doorLight.Visible;
+    }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override async void _Process(double delta)
-	{
-		if (Input.IsActionJustReleased("moon"))
-		{
-			ToggleMoon();
-		}
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override async void _Process(double delta)
+    {
+        if (Input.IsActionJustReleased("moon"))
+        {
+            ToggleMoon();
+        }
 
-		if (Input.IsActionJustReleased("take"))
-		{
-			var itemToGrab = allItems.Find(item => item.cameraMarker == currentCameraMarker);
-			ToggleGrabItem(itemToGrab);
-		}
+        if (Input.IsActionJustReleased("take"))
+        {
+            var itemToGrab = allItems.Find(item => item.cameraMarker == currentCameraMarker);
+            ToggleGrabItem(itemToGrab);
+        }
 
-		if (Input.IsActionJustReleased("chalk") && currentItem == chalk)
-		{
-			var finalValue = 1f;
-			if ((float)circleMaterial.GetShaderParameter("dissolve_value") > 0f)
-			{
-				finalValue = 0f;
-			}
-			var chalkAnimationDuration = 2.0f;
-			var durationThird = chalkAnimationDuration / 3f;
-			var tween = CreateTween();
-			tween.TweenProperty(circleMaterial, "shader_parameter/dissolve_value", finalValue, chalkAnimationDuration);
-			SwitchTo(marker1);
-			GD.Print("After switch marker1");
-			actionPlayer.Autoplay = true;
-			actionPlayer.Play();
-			await Task.Delay((int)(durationThird * 1000));
-			SwitchTo(marker2);
-			GD.Print("After switch marker2");
+        if (Input.IsActionJustReleased("chalk") && currentItem == chalk)
+        {
+            var finalValue = 1f;
+            if ((float)circleMaterial.GetShaderParameter("dissolve_value") > 0f)
+            {
+                finalValue = 0f;
+            }
+            var chalkAnimationDuration = 2.0f;
+            var durationThird = chalkAnimationDuration / 3f;
+            var tween = CreateTween();
+            tween.TweenProperty(
+                circleMaterial,
+                "shader_parameter/dissolve_value",
+                finalValue,
+                chalkAnimationDuration
+            );
+            SwitchTo(marker1);
+            GD.Print("After switch marker1");
+            actionPlayer.Autoplay = true;
+            actionPlayer.Play();
+            await Task.Delay((int)(durationThird * 1000));
+            SwitchTo(marker2);
+            GD.Print("After switch marker2");
 
-			await Task.Delay((int)(durationThird * 1000));
-			SwitchTo(marker3);
-			GD.Print("After switch marker3");
+            await Task.Delay((int)(durationThird * 1000));
+            SwitchTo(marker3);
+            GD.Print("After switch marker3");
 
+            await ToSignal(tween, "finished");
+            GD.Print("After tween finished");
+            actionPlayer.Stop();
+            SwitchTo(initialMarker);
+            await Task.Delay(300);
+            ToggleMoon();
+        }
 
-			await ToSignal(tween, "finished");
-			GD.Print("After tween finished");
-			actionPlayer.Stop();
-			SwitchTo(initialMarker);
-			await Task.Delay(300);
-			ToggleMoon();
-		}
+        if (Input.IsActionJustReleased("left"))
+        {
+            SwitchInDirection(Direction.Left);
+        }
+        else if (Input.IsActionJustReleased("right"))
+        {
+            SwitchInDirection(Direction.Right);
+        }
 
-		if (Input.IsActionJustReleased("left"))
-		{
-			SwitchInDirection(Direction.Left);
+        if (Input.IsActionJustReleased("jump"))
+        {
+            var newIndex = ++currentMarkerIndex;
+            if (newIndex > markersToCycle.Count - 1)
+            {
+                newIndex = 0;
+            }
 
-		}
-		else if (Input.IsActionJustReleased("right"))
-		{
-			SwitchInDirection(Direction.Right);
-		}
+            currentMarkerIndex = newIndex;
 
+            SwitchTo(markersToCycle[currentMarkerIndex]);
+        }
+    }
 
-		if (Input.IsActionJustReleased("jump"))
-		{
-			var newIndex = ++currentMarkerIndex;
-			if (newIndex > markersToCycle.Count - 1)
-			{
-				newIndex = 0;
-			}
+    private void SwitchInDirection(Direction direction)
+    {
+        var cameraRight = camera3D.GlobalTransform.Basis.X;
 
-			currentMarkerIndex = newIndex;
+        var closest = markersToCycle
+            .Select(
+                marker =>
+                    new
+                    {
+                        Marker = marker,
+                        ToMarker = marker.GlobalPosition - camera3D.GlobalPosition,
+                        DotProduct = cameraRight.Dot(
+                            marker.GlobalPosition - camera3D.GlobalPosition
+                        )
+                    }
+            )
+            .Where(entry =>
+            {
+                bool isRight = direction == Direction.Right && entry.DotProduct > 0;
+                bool isLeft = direction == Direction.Left && entry.DotProduct < 0;
+                return entry.Marker != currentCameraMarker && (isRight || isLeft);
+            }) // Points to the right of the camera
+            .OrderBy(entry => -entry.ToMarker.Z) // Sort by Z distance (closest first)
+            .ThenBy(entry => entry.ToMarker.Length()) // Sort by overall distance to the camera
+            .ThenBy(entry => entry.DotProduct) // Sort by rightmost (more positive) first
+            .Select(entry => entry.Marker) // Select the marker's global position
+            .FirstOrDefault();
+        if (closest != null)
+        {
+            GD.Print(
+                $"So first is {closest.GetPath()} at distance {closest.GlobalPosition - currentCameraMarker.GlobalPosition}"
+            );
+            SwitchTo(closest);
+        }
+    }
 
-			SwitchTo(markersToCycle[currentMarkerIndex]);
-		}
-	}
+    private void SwitchTo(CameraMarker newMarker)
+    {
+        currentCameraMarker = newMarker;
 
-	private void SwitchInDirection(Direction direction)
-	{
-		var cameraRight = camera3D.GlobalTransform.Basis.X;
+        if (currentCameraMarker != null)
+        {
+            dummyCamera.GlobalPosition = currentCameraMarker.cameraMarker.GlobalPosition;
+            dummyCamera.LookAt(currentCameraMarker.lookAtMarker.GlobalPosition);
+            var rotationTween = CreateTween();
+            rotationTween.SetParallel(true);
+            rotationTween
+                .TweenProperty(
+                    camera3D,
+                    new NodePath("global_position"),
+                    dummyCamera.GlobalPosition,
+                    0.3f
+                )
+                .SetTrans(Tween.TransitionType.Spring);
+            rotationTween
+                .TweenProperty(camera3D, new NodePath("rotation"), dummyCamera.Rotation, 0.3f)
+                .SetTrans(Tween.TransitionType.Spring);
+        }
+    }
 
-		var closest = markersToCycle
-		.Select(marker => new
-		{
-			Marker = marker,
-			ToMarker = marker.GlobalPosition - camera3D.GlobalPosition,
-			DotProduct = cameraRight.Dot(marker.GlobalPosition - camera3D.GlobalPosition)
-		})
-		.Where(entry =>
-		{
-			bool isRight = direction == Direction.Right && entry.DotProduct > 0;
-			bool isLeft = direction == Direction.Left && entry.DotProduct < 0;
-			return entry.Marker != currentCameraMarker && (isRight || isLeft);
-		})  // Points to the right of the camera
-		.OrderBy(entry => -entry.ToMarker.Z)    // Sort by Z distance (closest first)
-		.ThenBy(entry => entry.ToMarker.Length())  // Sort by overall distance to the camera
-		.ThenBy(entry => entry.DotProduct)     // Sort by rightmost (more positive) first
-		.Select(entry => entry.Marker) // Select the marker's global position
-		.FirstOrDefault();
-		if (closest != null)
-		{
-			GD.Print($"So first is {closest.GetPath()} at distance {closest.GlobalPosition - currentCameraMarker.GlobalPosition}");
-			SwitchTo(closest);
-		}
-	}
+    private void ToggleGrabItem(Item item)
+    {
+        if (currentItem == null)
+        {
+            currentItem = item;
+            item.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
+            item.Reparent(camera3D);
+        }
+        else if (currentItem == item)
+        {
+            currentItem = null;
 
-	private void SwitchTo(CameraMarker newMarker)
-	{
-		currentCameraMarker = newMarker;
+            item.Reparent(this);
+            item.GlobalTransform = item.defaultTransform;
+        }
+    }
 
-		if (currentCameraMarker != null)
-		{
-			dummyCamera.GlobalPosition = currentCameraMarker.cameraMarker.GlobalPosition;
-			dummyCamera.LookAt(currentCameraMarker.lookAtMarker.GlobalPosition);
-			var rotationTween = CreateTween();
-			rotationTween.SetParallel(true);
-			rotationTween.TweenProperty(camera3D, new NodePath("global_position"), dummyCamera.GlobalPosition, 0.3f).SetTrans(Tween.TransitionType.Spring);
-			rotationTween.TweenProperty(camera3D, new NodePath("rotation"), dummyCamera.Rotation, 0.3f).SetTrans(Tween.TransitionType.Spring);
-		}
-	}
-
-	private void ToggleGrabItem(Item item)
-	{
-		if (currentItem == null)
-		{
-			currentItem = item;
-			item.GlobalPosition = ((Marker3D)camera3D.FindChild("GrabbedPosition")).GlobalPosition;
-			item.Reparent(camera3D);
-		}
-		else if (currentItem == item)
-		{
-			currentItem = null;
-
-			item.Reparent(this);
-			item.GlobalTransform = item.defaultTransform;
-		}
-	}
-
-	private enum Direction
-	{
-		Left,
-		Right,
-	}
+    private enum Direction
+    {
+        Left,
+        Right,
+    }
 }

@@ -401,7 +401,7 @@ transform = Transform3D(-1.47963e-07, 0, 5, 0, 5, 0, -3.385, 0, -2.18557e-07, -2
 transform = Transform3D(-5.23, 0, -7.54979e-07, 0, 5, 0, 7.89708e-07, 0, -5, 0.310317, 0.672695, 3.95012)
 
 [node name="Head" type="StaticBody3D" parent="Cabin"]
-transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.29102, -1.66149)
+transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.12373, -0.267436)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cabin/Head"]
 shape = SubResource("CapsuleShape3D_eyirm")
