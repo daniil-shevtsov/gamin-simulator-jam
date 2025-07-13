@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cimx24g8g3sgn"
-path.s3tc="res://.godot/imported/photos_2023_7_4_fst_white-wrinkled-paper-sheet.jpg-b7da91b9b173d7a6374da88def5f5791.s3tc.ctex"
+uid="uid://ctfitagf2tvpj"
+path.s3tc="res://.godot/imported/paper_compressed.jpg-e474bd169960f7ac82b7539d875c9e01.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/photos_2023_7_4_fst_white-wrinkled-paper-sheet.jpg"
-dest_files=["res://.godot/imported/photos_2023_7_4_fst_white-wrinkled-paper-sheet.jpg-b7da91b9b173d7a6374da88def5f5791.s3tc.ctex"]
+source_file="res://assets/textures/paper_compressed.jpg"
+dest_files=["res://.godot/imported/paper_compressed.jpg-e474bd169960f7ac82b7539d875c9e01.s3tc.ctex"]
 
 [params]
 
