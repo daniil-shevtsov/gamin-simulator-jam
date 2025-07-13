@@ -424,10 +424,16 @@ spot_range = 4.619
 spot_angle = 56.14
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Cabin/Head"]
-transform = Transform3D(1, 0, 0, 0, -0.660343, -0.750965, 0, 0.750965, -0.660343, 0, 0, 0)
-light_color = Color(0.952941, 0, 0.462745, 1)
-light_energy = 9.566
-spot_range = 4.227
+transform = Transform3D(1, 0, 0, 0, 0.999151, -0.0412129, 0, 0.0412129, 0.999151, 0, 0.951173, 1.23941)
+light_energy = 15.273
+light_indirect_energy = 2.101
+light_volumetric_fog_energy = 15.303
+light_negative = true
+light_specular = 0.0
+spot_range = 1.418
+spot_attenuation = 0.535887
+spot_angle = 55.0
+spot_angle_attenuation = 0.707107
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.876727, 0.480989, 0, -0.480989, 0.876727, 0.032507, 2.17322, 2.73594)
