@@ -158,7 +158,8 @@ shader_parameter/burn_threshold = 0.185
 shader_parameter/noise_strength = 0.13
 shader_parameter/noise_scale = 0.925
 shader_parameter/neon_base_color = Color(0.2, 0.5, 1, 1)
-shader_parameter/albedo_color = null
+shader_parameter/albedo_color = Color(0, 0, 0, 1)
+shader_parameter/inner_face_neon_intensity = 0.86
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_svbgm")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]
@@ -470,12 +471,12 @@ surface_material_override/0 = SubResource("ShaderMaterial_jd2kp")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Cabin/Head2"]
 transform = Transform3D(0.394581, -0.918828, 0.00786763, 0.794127, 0.336697, -0.505962, 0.462243, 0.205891, 0.86252, 0, 0.173385, 2.30204)
-light_energy = 24.0
+light_energy = 2.263
 light_volumetric_fog_energy = 0.273
 light_specular = 3.732
 distance_fade_begin = 5.0
-spot_range = 4.619
-spot_angle = 56.14
+spot_range = 4.817
+spot_angle = 59.78
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Cabin/Head2"]
 transform = Transform3D(1, 0, 0, 0, 0.999151, -0.0412129, 0, 0.0412129, 0.999151, 0, 0.951173, 1.23941)
