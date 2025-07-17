@@ -92,6 +92,7 @@ public partial class CabinGame : Node3D
     {
         scritchPlayer.Play();
         doorLight.Visible = !doorLight.Visible;
+        head.Visible = !head.Visible;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

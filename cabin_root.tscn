@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://b48535sqgoyvb"]
+[gd_scene load_steps=67 format=3 uid="uid://b48535sqgoyvb"]
 
 [ext_resource type="Script" path="res://CabinGame.cs" id="1_k0v8v"]
 [ext_resource type="Texture2D" uid="uid://botjda56tmgt7" path="res://assets/textures/parq_256.jpg" id="2_hw6ww"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bmlnr3d58nk5q" path="res://assets/textures/head.jpg" id="11_gnb6s"]
 [ext_resource type="PackedScene" uid="uid://d05fwguo25585" path="res://assets/models/cabin/roof/roof_cabin_asset.glb" id="12_61vfk"]
 [ext_resource type="AudioStream" uid="uid://c7jqi4wrdkyh8" path="res://assets/sounds/rain-indoor-cabin-loop-74664.mp3" id="13_ot8y1"]
+[ext_resource type="Shader" path="res://assets/shaders/burn.gdshader" id="13_ql2e0"]
 [ext_resource type="AudioStream" uid="uid://bubrqehc13t6u" path="res://assets/sounds/scritch2.mp3" id="14_853yy"]
 [ext_resource type="Texture2D" uid="uid://be3rs4v3q0iwl" path="res://assets/models/jar/Vase_VaseCol01Rustic001_COL_2K.jpg" id="15_4apmb"]
 [ext_resource type="Texture2D" uid="uid://m1ttgfsugalk" path="res://assets/models/jar/Vase_VaseCol01Rustic001_GLOSS_2K.png" id="16_bcdkj"]
@@ -142,6 +143,21 @@ size = Vector3(0.222864, 0.009021, 0.0395996)
 next_pass = ExtResource("11_dj05d")
 cull_mode = 1
 albedo_texture = ExtResource("11_gnb6s")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h7ms4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_svbgm"]
+noise = SubResource("FastNoiseLite_h7ms4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jd2kp"]
+render_priority = 0
+shader = ExtResource("13_ql2e0")
+shader_parameter/sphere_position = Vector3(-0.39, 3.725, 0.17)
+shader_parameter/sphere_radius = 1.085
+shader_parameter/burn_threshold = 0.185
+shader_parameter/noise_strength = 0.13
+shader_parameter/noise_scale = 0.925
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_svbgm")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]
 flip_faces = true
@@ -402,6 +418,7 @@ transform = Transform3D(-5.23, 0, -7.54979e-07, 0, 5, 0, 7.89708e-07, 0, -5, 0.3
 
 [node name="Head" type="StaticBody3D" parent="Cabin"]
 transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.12373, -0.267436)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cabin/Head"]
 shape = SubResource("CapsuleShape3D_eyirm")
@@ -425,6 +442,42 @@ spot_angle = 56.14
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Cabin/Head"]
 transform = Transform3D(1, 0, 0, 0, 0.999151, -0.0412129, 0, 0.0412129, 0.999151, 0, 0.951173, 1.23941)
+light_energy = 15.273
+light_indirect_energy = 2.101
+light_volumetric_fog_energy = 15.303
+light_negative = true
+light_specular = 0.0
+spot_range = 1.418
+spot_attenuation = 0.535887
+spot_angle = 55.0
+spot_angle_attenuation = 0.707107
+
+[node name="Head2" type="StaticBody3D" parent="Cabin"]
+transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.12373, -0.267436)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cabin/Head2"]
+shape = SubResource("CapsuleShape3D_eyirm")
+
+[node name="Model" type="Node3D" parent="Cabin/Head2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cabin/Head2/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 5.96046e-08, 0, -5.96046e-08, 1, 0, -7.21812e-05, 2.71797e-05)
+mesh = ExtResource("10_bcgb0")
+surface_material_override/0 = SubResource("ShaderMaterial_jd2kp")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Cabin/Head2"]
+transform = Transform3D(0.394581, -0.918828, 0.00786763, 0.794127, 0.336697, -0.505962, 0.462243, 0.205891, 0.86252, 0, 0.173385, 2.30204)
+light_energy = 24.0
+light_volumetric_fog_energy = 0.273
+light_specular = 3.732
+distance_fade_begin = 5.0
+spot_range = 4.619
+spot_angle = 56.14
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Cabin/Head2"]
+transform = Transform3D(1, 0, 0, 0, 0.999151, -0.0412129, 0, 0.0412129, 0.999151, 0, 0.951173, 1.23941)
+visible = false
 light_energy = 15.273
 light_indirect_energy = 2.101
 light_volumetric_fog_energy = 15.303
