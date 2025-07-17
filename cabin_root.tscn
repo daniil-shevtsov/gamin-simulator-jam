@@ -153,13 +153,13 @@ noise = SubResource("FastNoiseLite_h7ms4")
 render_priority = 0
 shader = ExtResource("13_ql2e0")
 shader_parameter/sphere_position = Vector3(-0.39, 3.725, -0.145)
-shader_parameter/sphere_radius = 1.085
-shader_parameter/burn_threshold = 0.185
-shader_parameter/noise_strength = 0.13
+shader_parameter/sphere_radius = 1.045
+shader_parameter/burn_threshold = 0.56
+shader_parameter/noise_strength = 1.67
 shader_parameter/noise_scale = 0.925
-shader_parameter/neon_base_color = Color(0.2, 0.5, 1, 1)
+shader_parameter/neon_base_color = Color(1, 0.780392, 0, 1)
 shader_parameter/albedo_color = Color(0, 0, 0, 1)
-shader_parameter/inner_face_neon_intensity = 0.86
+shader_parameter/inner_face_neon_intensity = 0.88
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_svbgm")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]

@@ -35,9 +35,13 @@ vec3 calculate_neon_effect(float value, vec3 base_color) {
 
 void fragment(){
 	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	float dist = distance(world_pos, sphere_position);
+	vec3 sphere_position_current = sphere_position;
+	sphere_position_current.x = sphere_position.x + sin(TIME) * 0.05f;
+	sphere_position_current.y = sphere_position.y + sin(TIME) * 0.05f;
+	sphere_position_current.z = sphere_position.z + sin(TIME) * 0.05f;
+	float dist = distance(world_pos, sphere_position_current);
 	
-	vec2 noise_uv = (world_pos.xy + world_pos.yz + world_pos.xz) * noise_scale;
+	vec2 noise_uv = (world_pos.xy + world_pos.yz + world_pos.xz) * noise_scale + TIME * 0.1;
 	float noise = texture(noise_texture, noise_uv).r * 2.0 - 1.0;
 	
 	float noisy_radius = sphere_radius + noise * noise_strength;
