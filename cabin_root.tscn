@@ -152,11 +152,13 @@ noise = SubResource("FastNoiseLite_h7ms4")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jd2kp"]
 render_priority = 0
 shader = ExtResource("13_ql2e0")
-shader_parameter/sphere_position = Vector3(-0.39, 3.725, 0.17)
+shader_parameter/sphere_position = Vector3(-0.39, 3.725, -0.145)
 shader_parameter/sphere_radius = 1.085
 shader_parameter/burn_threshold = 0.185
 shader_parameter/noise_strength = 0.13
 shader_parameter/noise_scale = 0.925
+shader_parameter/neon_base_color = Color(0.2, 0.5, 1, 1)
+shader_parameter/albedo_color = null
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_svbgm")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wd0f3"]
@@ -453,7 +455,7 @@ spot_angle = 55.0
 spot_angle_attenuation = 0.707107
 
 [node name="Head2" type="StaticBody3D" parent="Cabin"]
-transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.12373, -0.267436)
+transform = Transform3D(1, 0, 0, 0, 0.935141, -0.354275, 0, 0.354275, 0.935141, 0, 2.12373, -1.26744)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cabin/Head2"]
 shape = SubResource("CapsuleShape3D_eyirm")
